@@ -1,2 +1,3 @@
-# superar-para-inovar-back
-Backend for Superar Para Inovar
+# Superar Para Inovar - Backend
+
+Backend para Superar Para Inovar App

@@ -1,0 +1,30 @@
+{
+  "name": "superar-para-inovar-back",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Biz1999/superar-para-inovar-back.git",
+  "author": "Biz1999 <alessanbiz@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev src/server.ts",
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/express": "^4.17.13",
+    "@types/ip": "^1.1.0",
+    "@types/uuid": "^8.3.1",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "ip": "^1.1.5",
+    "pg": "^8.7.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.36",
+    "uuid": "^8.3.2"
+  }
+}
