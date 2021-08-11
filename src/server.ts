@@ -4,6 +4,7 @@ import "express-async-errors";
 
 import { router } from "./routes";
 import ip from "ip";
+import cors from "cors";
 
 import { postgreDB } from "./database";
 
@@ -11,10 +12,11 @@ const app = express();
 
 const bootstrap = async () => {
   await postgreDB();
-
-  app.use(express.json());
+  //app.use(express.json());
 
   app.use(router);
+
+  //app.use(express.static("../public"));
 
   app.use(
     (err: Error, request: Request, response: Response, next: NextFunction) => {
