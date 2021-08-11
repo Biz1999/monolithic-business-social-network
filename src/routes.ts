@@ -31,7 +31,7 @@ router.post("/pilares/saude", createSaudeController.handle);
 router.post("/pilares/saude/photos", upload.array("image"), (req, res) => {
   const { files } = req;
   console.log(files);
-  res.send("parabéns");
+  res.send("ok");
 });
 router.post("/pilares/conhecimento", createConhecimentoController.handle);
 router.post("/pilares/interno", createInternoController.handle);
