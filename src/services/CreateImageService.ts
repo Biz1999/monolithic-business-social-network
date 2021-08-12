@@ -1,19 +1,26 @@
 import { getCustomRepository } from "typeorm";
 import { ImageRepositories } from "../repositories/ImageRepositories";
-import multer from "multer";
-
-interface Image {
-  base64: string;
-}
 
 interface IImageRequest {
   post_id: string;
-  images: Image[];
+  uri: string;
 }
 
 class CreateImageService {
-  async execute({ post_id, images }: IImageRequest) {
+  async execute({ post_id, uri }: IImageRequest) {
     const imageRepositories = getCustomRepository(ImageRepositories);
-    const upload = multer({ dest: "../../public" });
+
+    const newImage = imageRepositories.create({
+      post_id,
+      uri,
+    });
+
+    try {
+      await imageRepositories.save(newImage);
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 }
+
+export { CreateImageService };

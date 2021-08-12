@@ -15,7 +15,7 @@ const bootstrap = async () => {
 
   app.use(router);
 
-  app.use(express.static("images"));
+  app.use("/cdn", express.static("images"));
 
   app.use(
     (err: Error, request: Request, response: Response, next: NextFunction) => {
