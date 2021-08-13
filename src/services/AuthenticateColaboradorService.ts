@@ -18,7 +18,7 @@ class AuthenticateColaboradorService {
 
     if (!colaborador) throw new Error("Email/Senha inválida");
 
-    const isPasswordMatch = compare(password, colaborador.password);
+    const isPasswordMatch = await compare(password, colaborador.password);
 
     if (!isPasswordMatch) throw new Error("Email/Senha inválida");
 

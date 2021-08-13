@@ -3,7 +3,8 @@ import { CreateConhecimentoService } from "../services/CreateConhecimentoService
 
 class CreateConhecimentoController {
   async handle(request: Request, response: Response) {
-    const { colaborador_id, categoria, titulo, descricao } = request.body;
+    const { categoria, titulo, descricao } = request.body;
+    const { colaborador_id } = request;
 
     const createConhecimentoService = new CreateConhecimentoService();
 

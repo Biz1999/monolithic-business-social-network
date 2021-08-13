@@ -1,9 +1,22 @@
 import { Request, Response } from "express";
 import { CreateInternoService } from "../services/CreateInternoService";
+import ip from "ip";
+export interface Photo {
+  fieldname: string;
+  originalname: string;
+  encoding: string;
+  mimetype: string;
+  destination: string;
+  filename: string;
+  path: string;
+  size: number;
+}
 
 class CreateInternoController {
   async handle(request: Request, response: Response) {
-    const { colaborador_id, nome, descricao, comprovante } = request.body;
+    const file = request.file as Photo;
+    const { colaborador_id } = request;
+    const { nome, descricao } = request.body;
 
     const createInternoService = new CreateInternoService();
 
@@ -11,7 +24,6 @@ class CreateInternoController {
       colaborador_id,
       nome,
       descricao,
-      comprovante,
     });
 
     return response.json(interno);

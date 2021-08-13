@@ -30,6 +30,9 @@ export class Colaborador {
   @Column()
   peso: number;
 
+  @Column()
+  avatar: number;
+
   @CreateDateColumn()
   created_at: Date;
 

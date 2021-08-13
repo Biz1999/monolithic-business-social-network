@@ -6,7 +6,7 @@ interface IInternoRequest {
   colaborador_id: string;
   nome: string;
   descricao: string;
-  comprovante: string;
+  comprovante?: string;
 }
 
 class CreateInternoService {
@@ -34,7 +34,7 @@ class CreateInternoService {
 
     await internoRepositories.save(interno);
 
-    return interno;
+    return interno.id;
   }
 }
 

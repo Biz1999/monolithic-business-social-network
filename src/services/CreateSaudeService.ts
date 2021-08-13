@@ -6,13 +6,19 @@ interface ISaudeRequest {
   colaborador_id: string;
   categoria: string;
   legenda: string;
+  isAvailable: boolean;
 }
 class CreateSaudeService {
-  async execute({ colaborador_id, categoria, legenda }: ISaudeRequest) {
+  async execute({
+    colaborador_id,
+    categoria,
+    legenda,
+    isAvailable,
+  }: ISaudeRequest) {
     const saudeRepositories = getCustomRepository(SaudeRepositories);
     const pilarService = new CreatePilarService();
 
-    if (!categoria || !legenda) {
+    if (!categoria || !legenda || !isAvailable) {
       throw new Error("Campos vazios");
     }
 
@@ -22,11 +28,12 @@ class CreateSaudeService {
       pilar_id,
       categoria,
       legenda,
+      isAvailable,
     });
 
     await saudeRepositories.save(saude);
 
-    return saude;
+    return saude.id;
   }
 }
 

@@ -14,15 +14,23 @@ export interface Photo {
   size: number;
 }
 
+interface IPost {
+  post_id: string;
+}
+
 class CreateImageController {
   handle(request: Request, response: Response) {
     const files = request.files as Photo[];
+    const { colaborador_id } = request;
+    let post_id: string;
+    if (request.query && request.query.post_id) {
+      post_id = (request.query as any).post_id;
+    }
 
     const createImageService = new CreateImageService();
-    const post_id = "075630f2-444e-4511-a153-6141f805ed2f";
 
     files.forEach(async (file) => {
-      const uri = `http://${ip.address()}:3000/cdn/d482ddd3-7016-4e8f-818c-a21cc46fb3ef/${
+      const uri = `http://${ip.address()}:3000/cdn/${colaborador_id}/${
         file.filename
       }`;
       try {
