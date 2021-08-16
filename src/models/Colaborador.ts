@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { Exclude } from "class-transformer";
 import { v4 as uuid } from "uuid";
 
 @Entity("colaboradores")
@@ -18,6 +19,7 @@ export class Colaborador {
   @Column()
   email: string;
 
+  @Exclude()
   @Column()
   password: string;
 
@@ -31,7 +33,7 @@ export class Colaborador {
   peso: number;
 
   @Column()
-  avatar: number;
+  avatar: string;
 
   @CreateDateColumn()
   created_at: Date;

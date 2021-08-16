@@ -8,6 +8,7 @@ import {
   ManyToOne,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
+import { Exclude } from "class-transformer";
 import { Colaborador } from "./Colaborador";
 
 @Entity("pilares")
@@ -31,6 +32,7 @@ export class Pilar {
   @CreateDateColumn()
   created_at: string;
 
+  @Exclude()
   @UpdateDateColumn()
   updated_at: string;
 

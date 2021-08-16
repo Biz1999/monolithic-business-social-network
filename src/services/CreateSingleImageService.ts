@@ -10,7 +10,7 @@ class CreateSingleImageService {
   async execute({ interno_id, comprovante }: IImageRequest) {
     const internoRepositories = getCustomRepository(InternoRepositories);
 
-    if (!interno_id) throw new Error("Necessário identificador do colaborador");
+    if (!interno_id) throw new Error("Necessário identificador do pilar");
 
     const interno = await internoRepositories.save({
       id: interno_id,

@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { Pilar } from "./Pilar";
 import { v4 as uuid } from "uuid";
+import { Exclude } from "class-transformer";
 
 @Entity("saude")
 export class Saude {
@@ -28,12 +29,14 @@ export class Saude {
   @Column()
   legenda: string;
 
+  @Exclude()
   @Column()
   isAvailable: boolean;
 
   @CreateDateColumn()
   created_at: Date;
 
+  @Exclude()
   @UpdateDateColumn()
   updated_at: Date;
 
