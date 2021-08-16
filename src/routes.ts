@@ -15,11 +15,11 @@ import { CreateSingleImageController } from "./controllers/CreateSingleImageCont
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dir = `images/${req.colaborador_id}`;
+    const dir = `../public/${req.colaborador_id}`;
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir);
     }
-    cb(null, `images/${req.colaborador_id}`);
+    cb(null, dir);
   },
   filename: (req, file, cb) => {
     const filename = path.parse(file.originalname).name;
