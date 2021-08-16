@@ -75,4 +75,6 @@ typings/
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 
-ormconfig.ts
+
+#DB images
+images/

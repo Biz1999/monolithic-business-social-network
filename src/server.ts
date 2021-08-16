@@ -11,10 +11,11 @@ const app = express();
 
 const bootstrap = async () => {
   await postgreDB();
-
   app.use(express.json());
 
   app.use(router);
+
+  app.use("/cdn", express.static("../public"));
 
   app.use(
     (err: Error, request: Request, response: Response, next: NextFunction) => {

@@ -4,40 +4,32 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
+  ManyToOne,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
+import { Saude } from "./Saude";
 
-@Entity("colaboradores")
-export class Colaborador {
+@Entity("images")
+export class Image {
   @PrimaryColumn()
   readonly id: string;
 
   @Column()
-  nome: string;
+  post_id: string;
+
+  @JoinColumn({ name: "post_id" })
+  @ManyToOne(() => Saude)
+  postId: Saude;
 
   @Column()
-  email: string;
-
-  @Column()
-  password: string;
-
-  @Column()
-  setor: string;
-
-  @Column()
-  pontuacao: number;
-
-  @Column()
-  peso: number;
-
-  @Column()
-  avatar: number;
+  uri: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at: string;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updated_at: string;
 
   constructor() {
     if (!this.id) {

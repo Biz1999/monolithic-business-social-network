@@ -1,7 +1,11 @@
 import { createConnection } from "typeorm";
 
 const postgreDB = async () => {
-  createConnection();
+  try {
+    createConnection();
+  } catch (error) {
+    throw new Error("Não foi possível conectar ao banco");
+  }
 };
 
 export { postgreDB };

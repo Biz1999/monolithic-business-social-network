@@ -28,6 +28,9 @@ export class Saude {
   @Column()
   legenda: string;
 
+  @Column()
+  isAvailable: boolean;
+
   @CreateDateColumn()
   created_at: Date;
 
