@@ -14,7 +14,13 @@ class AuthenticateColaboradorService {
       ColaboradorRepositories
     );
 
-    const colaborador = await colaboradorRepositories.findOne({ email });
+    const colaborador = await colaboradorRepositories
+      .createQueryBuilder("colaborador")
+      .select("colaborador.id")
+      .addSelect("colaborador.email")
+      .addSelect("colaborador.password")
+      .where("email = :email", { email: email })
+      .getOne();
 
     if (!colaborador) throw new Error("Email/Senha inválida");
 

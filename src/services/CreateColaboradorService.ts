@@ -1,6 +1,7 @@
 import { getCustomRepository } from "typeorm";
 import { ColaboradorRepositories } from "../repositories/ColaboradorRepositories";
 import { hash } from "bcryptjs";
+import { classToPlain } from "class-transformer";
 
 interface ICreateColaboradorRequest {
   nome: string;
@@ -41,7 +42,7 @@ class CreateColaboradorService {
 
     await colaboradorRepository.save(colaborador);
 
-    return colaborador;
+    return classToPlain(colaborador);
   }
 }
 

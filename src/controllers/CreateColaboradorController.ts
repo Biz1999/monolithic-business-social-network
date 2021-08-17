@@ -14,7 +14,7 @@ class CreateColaboradorController {
       setor,
     });
 
-    return response.json(colaborador);
+    return response.status(201).json(colaborador);
   }
 }
 
