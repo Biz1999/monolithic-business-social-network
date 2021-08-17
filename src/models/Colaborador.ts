@@ -20,7 +20,7 @@ export class Colaborador {
   email: string;
 
   @Exclude()
-  @Column()
+  @Column({ select: false })
   password: string;
 
   @Column()

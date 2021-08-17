@@ -17,6 +17,8 @@ import { SendColaboradorDataController } from "./controllers/SendColaboradorData
 import { UpdateColaboradorAvatarController } from "./controllers/UpdateColaboradorAvatarController";
 import { ListAllAvailablePostsController } from "./controllers/ListAllAvailablePostsController";
 import { ListAllDocumentsByIdController } from "./controllers/ListAllDocumentsByIdController";
+import { ListAllColaboradoresPostsController } from "./controllers/ListAllColaboradoresPostsController";
+import { ListColaboradoresScoresController } from "./controllers/ListColaboradoresScoresController";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -48,6 +50,10 @@ const updateColaboradorAvatarController =
   new UpdateColaboradorAvatarController();
 const listAllAvailablePostsController = new ListAllAvailablePostsController();
 const listAllDocumentsByIdController = new ListAllDocumentsByIdController();
+const listAllColaboradoresPostsController =
+  new ListAllColaboradoresPostsController();
+const listColaboradoresScoresController =
+  new ListColaboradoresScoresController();
 
 router.get(
   "/colaborador",
@@ -67,6 +73,12 @@ router.get(
   ensurePagination,
   listAllAvailablePostsController.handle
 );
+router.get(
+  "/colaboradores/scores",
+  ensureAuthenticated,
+  ensurePagination,
+  listColaboradoresScoresController.handle
+);
 
 router.post("/colaboradores", createColaboradorController.handle);
 
@@ -83,6 +95,12 @@ router.post(
   ensureAuthenticated,
   upload.array("image"),
   createImageController.handle
+);
+router.get(
+  "/pilares/saude/photos",
+  ensureAuthenticated,
+  ensurePagination,
+  listAllColaboradoresPostsController.handle
 );
 router.post(
   "/pilares/conhecimento",

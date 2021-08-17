@@ -12,13 +12,15 @@ class ListAllDocumentsByIdService {
     );
 
     const documents = await conhecimentoRepositories.find({
-      where: (qb) => {
-        qb.where({
-          b: 2,
-        }).andWhere("colaborador_id = :colaboradorId", {
-          colaboradorId: colaborador_id,
-        });
+      where: {
+        pilarId: {
+          colaborador_id: colaborador_id,
+        },
       },
+      order: {
+        created_at: "DESC",
+      },
+      relations: ["pilarId"],
     });
 
     return documents;
