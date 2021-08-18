@@ -1,5 +1,4 @@
-import { classToPlain } from "class-transformer";
-import { createQueryBuilder, getCustomRepository } from "typeorm";
+import { getCustomRepository } from "typeorm";
 import { PilarRepositories } from "../repositories/PilarRepositories";
 
 interface IScoresRequest {

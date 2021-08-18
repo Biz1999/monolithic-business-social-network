@@ -35,9 +35,11 @@ export class Colaborador {
   @Column()
   avatar: string;
 
+  @Exclude()
   @CreateDateColumn()
   created_at: Date;
 
+  @Exclude()
   @UpdateDateColumn()
   updated_at: Date;
 

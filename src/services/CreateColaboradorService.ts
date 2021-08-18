@@ -30,6 +30,7 @@ class CreateColaboradorService {
     if (isEmailAlreadyExists) throw new Error(`Email ${email} already exists`);
 
     const hashedPassword = await hash(password, 8);
+    const avatar = "";
 
     const colaborador = colaboradorRepository.create({
       nome,
@@ -38,6 +39,7 @@ class CreateColaboradorService {
       setor,
       pontuacao,
       peso,
+      avatar,
     });
 
     await colaboradorRepository.save(colaborador);
