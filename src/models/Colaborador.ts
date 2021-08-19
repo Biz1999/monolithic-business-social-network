@@ -10,6 +10,7 @@ import { v4 as uuid } from "uuid";
 
 @Entity("colaboradores")
 export class Colaborador {
+  @Exclude()
   @PrimaryColumn()
   readonly id: string;
 

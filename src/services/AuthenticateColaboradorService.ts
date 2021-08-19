@@ -1,4 +1,5 @@
 import { compare } from "bcryptjs";
+import { classToPlain } from "class-transformer";
 import { sign } from "jsonwebtoken";
 import { getCustomRepository } from "typeorm";
 import { ColaboradorRepositories } from "../repositories/ColaboradorRepositories";
@@ -14,10 +15,21 @@ class AuthenticateColaboradorService {
       ColaboradorRepositories
     );
 
+    const MailConfirm = require("mail-confirm");
+
+    const emailResponse = new MailConfirm({
+      emailAddress: "alessandro.biz@integradora.com.br",
+      timeout: 8000,
+      mailFrom: "my@email.com",
+      invalidMailboxKeywords: [],
+      debug: false,
+    });
+
+    console.log(await emailResponse.check());
+
     const colaborador = await colaboradorRepositories
       .createQueryBuilder("colaborador")
-      .select("colaborador.id")
-      .addSelect("colaborador.email")
+      .select("colaborador")
       .addSelect("colaborador.password")
       .where("email = :email", { email: email })
       .getOne();
@@ -39,7 +51,10 @@ class AuthenticateColaboradorService {
       }
     );
 
-    return token;
+    return {
+      data: classToPlain(colaborador),
+      access_token: token,
+    };
   }
 }
 
