@@ -18,7 +18,7 @@ class AuthenticateColaboradorService {
     const MailConfirm = require("mail-confirm");
 
     const emailResponse = new MailConfirm({
-      emailAddress: "alessandro.biz@integradora.com.br",
+      emailAddress: email,
       timeout: 8000,
       mailFrom: "my@email.com",
       invalidMailboxKeywords: [],
