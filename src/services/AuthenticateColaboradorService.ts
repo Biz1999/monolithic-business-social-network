@@ -19,8 +19,8 @@ class AuthenticateColaboradorService {
 
     const emailResponse = new MailConfirm({
       emailAddress: email,
-      timeout: 8000,
-      mailFrom: "my@email.com",
+      timeout: 15000,
+      mailFrom: "alessbizzz@email.com",
       invalidMailboxKeywords: [],
       debug: false,
     });
