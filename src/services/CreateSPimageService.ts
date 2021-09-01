@@ -36,7 +36,7 @@ class CreateSPimageService {
         password: process.env.SP_PASSWORD,
       };
       var fileOpts = {
-        folder: `colaboradores/123/321`,
+        folder: `colaboradores/${colaborador.nome}/${post.legenda}`,
         fileName: filename,
         fileContent: fs.readFileSync(path),
       };
