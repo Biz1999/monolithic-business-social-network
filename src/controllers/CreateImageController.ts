@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import ip from "ip";
 
 import { CreateImageService } from "../services/CreateImageService";
+import { CreateSPimageService } from "../services/CreateSPimageService";
 
 export interface Photo {
   fieldname: string;
@@ -28,13 +29,22 @@ class CreateImageController {
     }
 
     const createImageService = new CreateImageService();
+    const createSPimageService = new CreateSPimageService();
 
     files.forEach(async (file) => {
       const uri = `http://${ip.address()}:3000/cdn/${colaborador_id}/${
         file.filename
       }`;
       try {
-        await createImageService.execute({ post_id, uri });
+        Promise.all([
+          createImageService.execute({ post_id, uri }),
+          createSPimageService.execute({
+            colaborador_id,
+            post_id,
+            filename: file.filename,
+            path: file.path,
+          }),
+        ]);
       } catch (error) {
         throw new Error(error.message);
       }

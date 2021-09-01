@@ -38,6 +38,7 @@
     "multer": "^1.4.3",
     "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
+    "spsave": "^4.0.2",
     "typeorm": "^0.2.36",
     "uuid": "^8.3.2"
   }

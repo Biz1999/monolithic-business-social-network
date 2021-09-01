@@ -15,17 +15,17 @@ class AuthenticateColaboradorService {
       ColaboradorRepositories
     );
 
-    const MailConfirm = require("mail-confirm");
+    // const MailConfirm = require("mail-confirm");
 
-    const emailResponse = new MailConfirm({
-      emailAddress: email,
-      timeout: 15000,
-      mailFrom: "alessbizzz@email.com",
-      invalidMailboxKeywords: [],
-      debug: false,
-    });
+    // const emailResponse = new MailConfirm({
+    //   emailAddress: email,
+    //   timeout: 4000,
+    //   mailFrom: "alessbizzz@email.com",
+    //   invalidMailboxKeywords: [],
+    //   debug: false,
+    // });
 
-    console.log(await emailResponse.check());
+    // console.log(await emailResponse.check());
 
     const colaborador = await colaboradorRepositories
       .createQueryBuilder("colaborador")
