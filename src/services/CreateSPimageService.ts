@@ -36,7 +36,7 @@ class CreateSPimageService {
         password: process.env.SP_PASSWORD,
       };
       var fileOpts = {
-        folder: `https://spiintegradora.sharepoint.com/sites/Superar-Para-Inovar-CDN/colaboradores/123`,
+        folder: `colaboradores/123/321`,
         fileName: filename,
         fileContent: fs.readFileSync(path),
       };
