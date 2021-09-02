@@ -1,44 +1,44 @@
 import { getCustomRepository } from "typeorm";
 import { ColaboradorRepositories } from "../repositories/ColaboradorRepositories";
-import { SaudeRepositories } from "../repositories/SaudeRepositories";
+import { InternoRepositories } from "../repositories/InternoRepositories";
 import { spsave } from "spsave";
 
 interface ISharepointRequest {
   colaborador_id: string;
-  post_id: string;
+  interno_id?: string;
   filename: string;
   path: string;
   now: number;
 }
 
-class CreateSPimageService {
+class CreateSPSingleimageService {
   async execute({
     colaborador_id,
-    post_id,
+    interno_id,
     filename,
     path,
     now,
   }: ISharepointRequest) {
     try {
-      const saudeRepositories = getCustomRepository(SaudeRepositories);
+      const internoRepositories = getCustomRepository(InternoRepositories);
       const colaboradorRepositories = getCustomRepository(
         ColaboradorRepositories
       );
       const fs = require("fs");
 
-      const post = await saudeRepositories.findOne({ id: post_id });
+      const interno = await internoRepositories.findOne({ id: interno_id });
       const colaborador = await colaboradorRepositories.findOne({
         id: colaborador_id,
       });
 
-      if (!post || !colaborador) throw new Error("Cliente/Post não existe");
+      if (!interno || !colaborador) throw new Error("Cliente/Post não existe");
 
       var creds = {
         username: process.env.SP_USER,
         password: process.env.SP_PASSWORD,
       };
       var fileOpts = {
-        folder: `colaboradores/${colaborador.nome}-${post.legenda}-${now}`,
+        folder: `colaboradores/${colaborador.nome}-${interno.descricao}-${now}`,
         fileName: filename,
         fileContent: fs.readFileSync(path),
       };
@@ -57,4 +57,4 @@ class CreateSPimageService {
   }
 }
 
-export { CreateSPimageService };
+export { CreateSPSingleimageService };

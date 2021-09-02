@@ -31,6 +31,7 @@ class CreateImageController {
     const createImageService = new CreateImageService();
     const createSPimageService = new CreateSPimageService();
 
+    const now = Date.now();
     files.forEach(async (file) => {
       const uri = `http://${ip.address()}:3000/cdn/${colaborador_id}/${
         file.filename
@@ -43,6 +44,7 @@ class CreateImageController {
             post_id,
             filename: file.filename,
             path: file.path,
+            now,
           }),
         ]);
       } catch (error) {

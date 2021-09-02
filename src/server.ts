@@ -3,7 +3,6 @@ import express, { Request, Response, NextFunction } from "express";
 import "express-async-errors";
 
 import { router } from "./routes";
-import ip from "ip";
 
 import { postgreDB } from "./database";
 
@@ -11,6 +10,7 @@ const app = express();
 
 const bootstrap = async () => {
   await postgreDB();
+
   app.use(express.json());
 
   app.use(router);
@@ -30,10 +30,7 @@ const bootstrap = async () => {
       });
     }
   );
-
-  app.listen(3000, ip.address(), () =>
-    console.log(`Port ${ip.address()} -> Server listenin...`)
-  );
+  app.listen(3000, "0.0.0.0", () => console.log(`Server listenin...`));
 };
 
 bootstrap();
