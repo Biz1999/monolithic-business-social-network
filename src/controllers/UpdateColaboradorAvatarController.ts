@@ -19,9 +19,7 @@ class UpdateColaboradorAvatarController {
     const file = request.file as Avatar;
     const { colaborador_id } = request;
 
-    const avatar = `http://${ip.address()}:3000/cdn/${colaborador_id}/${
-      file.filename
-    }`;
+    const avatar = `http://177.190.201.227:3000/cdn/${colaborador_id}/${file.filename}`;
     try {
       const saveAvatar = await updateColaboradorAvatarService.execute({
         colaborador_id,

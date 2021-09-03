@@ -33,9 +33,7 @@ class CreateImageController {
 
     const now = Date.now();
     files.forEach(async (file) => {
-      const uri = `http://${ip.address()}:3000/cdn/${colaborador_id}/${
-        file.filename
-      }`;
+      const uri = `http://177.190.201.227:3000/cdn/${colaborador_id}/${file.filename}`;
       try {
         Promise.all([
           createImageService.execute({ post_id, uri }),
