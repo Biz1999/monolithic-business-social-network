@@ -33,17 +33,17 @@ class CreateSPimageService {
 
       if (!post || !colaborador) throw new Error("Cliente/Post não existe");
 
-      var creds = {
+      let creds = {
         username: process.env.SP_USER,
         password: process.env.SP_PASSWORD,
       };
-      var fileOpts = {
+      let fileOpts = {
         folder: `colaboradores/${colaborador.nome}-${post.legenda}-${now}`,
         fileName: filename,
         fileContent: fs.readFileSync(path),
       };
 
-      var coreOpts = {
+      let coreOpts = {
         siteUrl:
           "https://spiintegradora.sharepoint.com/sites/Superar-Para-Inovar-CDN",
       };

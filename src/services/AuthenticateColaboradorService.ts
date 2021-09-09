@@ -40,16 +40,10 @@ class AuthenticateColaboradorService {
 
     if (!isPasswordMatch) throw new Error("Email/Senha inválida");
 
-    const token = sign(
-      {
-        email: colaborador.email,
-      },
-      process.env.TOKEN_MD5,
-      {
-        subject: colaborador.id,
-        expiresIn: "4d",
-      }
-    );
+    const token = sign({}, process.env.TOKEN_MD5, {
+      subject: colaborador.id,
+      expiresIn: "10d",
+    });
 
     return {
       data: classToPlain(colaborador),

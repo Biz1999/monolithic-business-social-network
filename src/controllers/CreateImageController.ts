@@ -37,6 +37,7 @@ class CreateImageController {
       try {
         Promise.all([
           createImageService.execute({ post_id, uri }),
+          new Promise((r) => setTimeout(r, 500)),
           createSPimageService.execute({
             colaborador_id,
             post_id,
@@ -46,7 +47,7 @@ class CreateImageController {
           }),
         ]);
       } catch (error) {
-        throw new Error(error.message);
+        throw new Error(error);
       }
     });
 

@@ -5,6 +5,7 @@ import "express-async-errors";
 import { router } from "./routes";
 
 import { postgreDB } from "./database";
+import { ensureAuthenticated } from "./middlewares/ensureAuthenticated";
 
 const app = express();
 
@@ -15,7 +16,7 @@ const bootstrap = async () => {
 
   app.use(router);
 
-  app.use("/cdn", express.static("../public"));
+  app.use("/cdn", ensureAuthenticated, express.static("../public"));
 
   app.use(
     (err: Error, request: Request, response: Response, next: NextFunction) => {
