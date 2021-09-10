@@ -11,6 +11,7 @@ import { CreateSaudeController } from "./controllers/CreateSaudeController";
 import { CreateConhecimentoController } from "./controllers/CreateConhecimentoController";
 import { CreateInternoController } from "./controllers/CreateInternoController";
 import { CreateImageController } from "./controllers/CreateImageController";
+import { CreateDocumentController } from "./controllers/CreateDocumentController";
 import { AuthenticateColaboradorController } from "./controllers/AuthenticateColaboradorController";
 import { CreateSingleImageController } from "./controllers/CreateSingleImageController";
 import { SendColaboradorDataController } from "./controllers/SendColaboradorDataController";
@@ -46,6 +47,7 @@ const createConhecimentoController = new CreateConhecimentoController();
 const createInternoController = new CreateInternoController();
 const createImageController = new CreateImageController();
 const createSingleImageController = new CreateSingleImageController();
+const createDocumentController = new CreateDocumentController();
 const updateColaboradorAvatarController =
   new UpdateColaboradorAvatarController();
 const listAllAvailablePostsController = new ListAllAvailablePostsController();
@@ -106,6 +108,12 @@ router.post(
   "/pilares/conhecimento",
   ensureAuthenticated,
   createConhecimentoController.handle
+);
+router.patch(
+  "/pilares/conhecimento/document",
+  ensureAuthenticated,
+  upload.single("file"),
+  createDocumentController.handle
 );
 router.get(
   "/pilares/conhecimento/documents",

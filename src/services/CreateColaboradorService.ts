@@ -23,11 +23,11 @@ class CreateColaboradorService {
   }: ICreateColaboradorRequest) {
     const colaboradorRepository = getCustomRepository(ColaboradorRepositories);
 
-    if (!email) throw new Error("Invalid email");
+    if (!email) throw new Error("Email inválido");
 
     const isEmailAlreadyExists = await colaboradorRepository.findOne({ email });
 
-    if (isEmailAlreadyExists) throw new Error(`Email ${email} already exists`);
+    if (isEmailAlreadyExists) throw new Error(`Email já cadastrado`);
 
     const hashedPassword = await hash(password, 8);
     const avatar = "";

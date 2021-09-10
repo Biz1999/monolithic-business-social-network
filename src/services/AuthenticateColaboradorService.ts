@@ -34,7 +34,9 @@ class AuthenticateColaboradorService {
       .where("email = :email", { email: email })
       .getOne();
 
-    if (!colaborador) throw new Error("Email/Senha inválida");
+    if (!colaborador) {
+      throw new Error("Email/Senha inválida");
+    }
 
     const isPasswordMatch = await compare(password, colaborador.password);
 
