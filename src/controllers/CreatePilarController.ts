@@ -9,7 +9,7 @@ class CreatePilarController {
 
     const pilar = await createPilarService.execute({ colaborador_id });
 
-    return response.json(pilar);
+    return response.status(201).json(pilar);
   }
 }
 

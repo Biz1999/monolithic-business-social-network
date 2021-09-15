@@ -14,7 +14,7 @@ class CreateSaudeController {
       isAvailable,
     });
 
-    return response.json(saude);
+    return response.status(201).json(saude);
   }
 }
 

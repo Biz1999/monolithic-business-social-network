@@ -11,7 +11,6 @@ import { CreateSaudeController } from "./controllers/CreateSaudeController";
 import { CreateConhecimentoController } from "./controllers/CreateConhecimentoController";
 import { CreateInternoController } from "./controllers/CreateInternoController";
 import { CreateImageController } from "./controllers/CreateImageController";
-import { CreateDocumentController } from "./controllers/CreateDocumentController";
 import { AuthenticateColaboradorController } from "./controllers/AuthenticateColaboradorController";
 import { CreateSingleImageController } from "./controllers/CreateSingleImageController";
 import { SendColaboradorDataController } from "./controllers/SendColaboradorDataController";
@@ -20,6 +19,7 @@ import { ListAllAvailablePostsController } from "./controllers/ListAllAvailableP
 import { ListAllDocumentsByIdController } from "./controllers/ListAllDocumentsByIdController";
 import { ListAllColaboradoresPostsController } from "./controllers/ListAllColaboradoresPostsController";
 import { ListColaboradoresScoresController } from "./controllers/ListColaboradoresScoresController";
+import { CreateFileController } from "./controllers/CreateFileController";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -46,8 +46,8 @@ const createSaudeController = new CreateSaudeController();
 const createConhecimentoController = new CreateConhecimentoController();
 const createInternoController = new CreateInternoController();
 const createImageController = new CreateImageController();
+const createFileController = new CreateFileController();
 const createSingleImageController = new CreateSingleImageController();
-const createDocumentController = new CreateDocumentController();
 const updateColaboradorAvatarController =
   new UpdateColaboradorAvatarController();
 const listAllAvailablePostsController = new ListAllAvailablePostsController();
@@ -109,11 +109,11 @@ router.post(
   ensureAuthenticated,
   createConhecimentoController.handle
 );
-router.patch(
+router.post(
   "/pilares/conhecimento/document",
   ensureAuthenticated,
-  upload.single("file"),
-  createDocumentController.handle
+  upload.array("file"),
+  createFileController.handle
 );
 router.get(
   "/pilares/conhecimento/documents",

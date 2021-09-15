@@ -38,7 +38,7 @@ class CreateSPSingleimageService {
         password: process.env.SP_PASSWORD,
       };
       var fileOpts = {
-        folder: `colaboradores/${colaborador.nome}-${interno.descricao}-${now}`,
+        folder: `desenvolvimento/${colaborador.nome}-${interno.descricao}-${now}`,
         fileName: filename,
         fileContent: fs.readFileSync(path),
       };

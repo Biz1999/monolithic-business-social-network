@@ -15,7 +15,7 @@ class CreateConhecimentoController {
       descricao,
     });
 
-    return response.json(conhecimento);
+    return response.status(201).json(conhecimento);
   }
 }
 

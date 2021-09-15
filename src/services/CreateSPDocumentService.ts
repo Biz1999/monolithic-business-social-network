@@ -38,12 +38,17 @@ class CreateSPDocumentService {
       if (!conhecimento || !colaborador)
         throw new Error("Cliente/Post não existe");
 
+      let titulo = conhecimento.titulo;
+      if (titulo === "lecture") {
+        titulo = "palestra-treinamento-curso";
+      }
       var creds = {
         username: process.env.SP_USER,
         password: process.env.SP_PASSWORD,
       };
+
       var fileOpts = {
-        folder: `colaboradores/${colaborador.nome}-${conhecimento.titulo}-${now}`,
+        folder: `desenvolvimento/${colaborador.nome}-${titulo}-${now}`,
         fileName: filename,
         fileContent: fs.readFileSync(path),
       };
