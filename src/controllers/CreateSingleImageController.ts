@@ -41,7 +41,7 @@ class CreateSingleImageController {
         now: Date.now(),
       });
 
-      return response.json(saveComprovante);
+      return response.status(201).json(saveComprovante);
     } catch (error) {
       throw new Error(error.message);
     }

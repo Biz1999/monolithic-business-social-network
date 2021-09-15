@@ -19,6 +19,7 @@ import { ListAllAvailablePostsController } from "./controllers/ListAllAvailableP
 import { ListAllDocumentsByIdController } from "./controllers/ListAllDocumentsByIdController";
 import { ListAllColaboradoresPostsController } from "./controllers/ListAllColaboradoresPostsController";
 import { ListColaboradoresScoresController } from "./controllers/ListColaboradoresScoresController";
+import { CreateFileController } from "./controllers/CreateFileController";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -45,6 +46,7 @@ const createSaudeController = new CreateSaudeController();
 const createConhecimentoController = new CreateConhecimentoController();
 const createInternoController = new CreateInternoController();
 const createImageController = new CreateImageController();
+const createFileController = new CreateFileController();
 const createSingleImageController = new CreateSingleImageController();
 const updateColaboradorAvatarController =
   new UpdateColaboradorAvatarController();
@@ -106,6 +108,12 @@ router.post(
   "/pilares/conhecimento",
   ensureAuthenticated,
   createConhecimentoController.handle
+);
+router.post(
+  "/pilares/conhecimento/document",
+  ensureAuthenticated,
+  upload.array("file"),
+  createFileController.handle
 );
 router.get(
   "/pilares/conhecimento/documents",

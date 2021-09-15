@@ -26,7 +26,7 @@ class CreateInternoController {
       descricao,
     });
 
-    return response.json(interno);
+    return response.status(201).json(interno);
   }
 }
 

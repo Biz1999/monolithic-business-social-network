@@ -4,7 +4,7 @@ import { CreatePilarService } from "./CreatePilarService";
 
 interface IConhecimentoRequest {
   colaborador_id: string;
-  categoria: string;
+  categoria: "article" | "book" | "lecture";
   titulo: string;
   descricao: string;
 }
@@ -21,8 +21,16 @@ class CreateConhecimentoService {
     );
     const pilarService = new CreatePilarService();
 
-    if (!categoria || !titulo || !descricao) {
+    if (!categoria || !descricao) {
       throw new Error("Campos vazios");
+    }
+
+    if (
+      categoria !== "article" &&
+      categoria !== "book" &&
+      categoria !== "lecture"
+    ) {
+      throw new Error("Categoria não aceita");
     }
 
     const pilar_id = await pilarService.execute({ colaborador_id });
@@ -36,7 +44,7 @@ class CreateConhecimentoService {
 
     await conhecimentoRepositories.save(conhecimento);
 
-    return conhecimento;
+    return conhecimento.id;
   }
 }
 

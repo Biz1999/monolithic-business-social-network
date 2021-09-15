@@ -31,6 +31,9 @@ export class Conhecimento {
   @Column()
   descricao: string;
 
+  @Column({ nullable: true })
+  file: string;
+
   @CreateDateColumn()
   created_at: Date;
 

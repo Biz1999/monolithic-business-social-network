@@ -1,44 +1,54 @@
 import { getCustomRepository } from "typeorm";
 import { ColaboradorRepositories } from "../repositories/ColaboradorRepositories";
-import { InternoRepositories } from "../repositories/InternoRepositories";
+import { ConhecimentoRepositories } from "../repositories/ConhecimentoRepositories";
 import { spsave } from "spsave";
 
 interface ISharepointRequest {
   colaborador_id: string;
-  interno_id?: string;
+  conhecimento_id?: string;
   filename: string;
   path: string;
   now: number;
 }
 
-class CreateSPSingleimageService {
+class CreateSPDocumentService {
   async execute({
     colaborador_id,
-    interno_id,
+    conhecimento_id,
     filename,
     path,
     now,
   }: ISharepointRequest) {
     try {
-      const internoRepositories = getCustomRepository(InternoRepositories);
+      const conhecimentoRepositories = getCustomRepository(
+        ConhecimentoRepositories
+      );
       const colaboradorRepositories = getCustomRepository(
         ColaboradorRepositories
       );
       const fs = require("fs");
 
-      const interno = await internoRepositories.findOne({ id: interno_id });
+      const conhecimento = await conhecimentoRepositories.findOne({
+        id: conhecimento_id,
+      });
       const colaborador = await colaboradorRepositories.findOne({
         id: colaborador_id,
       });
 
-      if (!interno || !colaborador) throw new Error("Cliente/Post não existe");
+      if (!conhecimento || !colaborador)
+        throw new Error("Cliente/Post não existe");
 
+      let titulo = conhecimento.titulo;
+      if (titulo === "lecture") {
+        titulo = "palestra-treinamento-curso";
+      }
       var creds = {
         username: process.env.SP_USER,
         password: process.env.SP_PASSWORD,
       };
+
       var fileOpts = {
-        folder: `desenvolvimento/${colaborador.nome}-${interno.descricao}-${now}`,
+        folder: `desenvolvimento/${colaborador.nome}-${titulo}-${now}`,
         fileName: filename,
         fileContent: fs.readFileSync(path),
       };
@@ -57,4 +67,4 @@ class CreateSPSingleimageService {
   }
 }
 
-export { CreateSPSingleimageService };
+export { CreateSPDocumentService };

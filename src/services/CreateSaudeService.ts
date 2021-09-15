@@ -18,7 +18,7 @@ class CreateSaudeService {
     const saudeRepositories = getCustomRepository(SaudeRepositories);
     const pilarService = new CreatePilarService();
 
-    if (!categoria || !legenda || !isAvailable) {
+    if (!categoria || !legenda || isAvailable === null) {
       throw new Error("Campos vazios");
     }
 

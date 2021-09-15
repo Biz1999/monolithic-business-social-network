@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import express, { Request, Response, NextFunction } from "express";
 import "express-async-errors";
+import ip from "ip";
 
 import { router } from "./routes";
 
@@ -31,7 +32,9 @@ const bootstrap = async () => {
       });
     }
   );
-  app.listen(3000, "0.0.0.0", () => console.log(`Server listenin...`));
+  app.listen(8000, ip.address(), () =>
+    console.log(`Port ${ip.address()}-> Server listenin...`)
+  );
 };
 
 bootstrap();
