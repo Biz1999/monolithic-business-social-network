@@ -8,6 +8,7 @@ interface ICreateColaboradorRequest {
   email: string;
   password: string;
   setor: string;
+  avatar: string;
   pontuacao?: number;
   peso?: number;
 }
@@ -18,6 +19,7 @@ class CreateColaboradorService {
     email,
     password,
     setor,
+    avatar,
     pontuacao = 0,
     peso = 0,
   }: ICreateColaboradorRequest) {
@@ -30,7 +32,6 @@ class CreateColaboradorService {
     if (isEmailAlreadyExists) throw new Error(`Email já cadastrado`);
 
     const hashedPassword = await hash(password, 8);
-    const avatar = "";
 
     const colaborador = colaboradorRepository.create({
       nome,
