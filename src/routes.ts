@@ -20,6 +20,7 @@ import { ListAllDocumentsByIdController } from "./controllers/ListAllDocumentsBy
 import { ListAllColaboradoresPostsController } from "./controllers/ListAllColaboradoresPostsController";
 import { ListColaboradoresScoresController } from "./controllers/ListColaboradoresScoresController";
 import { CreateFileController } from "./controllers/CreateFileController";
+import { ShowMonthlyColaboradorScoreController } from "./controllers/ShowSaudeColaboradorController";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -56,11 +57,19 @@ const listAllColaboradoresPostsController =
   new ListAllColaboradoresPostsController();
 const listColaboradoresScoresController =
   new ListColaboradoresScoresController();
+const showMonthlyColaboradorScoreController =
+  new ShowMonthlyColaboradorScoreController();
 
 router.get(
   "/colaborador",
   ensureAuthenticated,
   sendColaboradorDataController.handle
+);
+
+router.get(
+  "/colaborador/score",
+  ensureAuthenticated,
+  showMonthlyColaboradorScoreController.handle
 );
 
 router.patch(

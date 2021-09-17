@@ -11,7 +11,7 @@ class CreateColaboradorController {
     const firstName = fullName[0];
     const lastName = fullName[fullName.length - 1];
     let avatar = `https://ui-avatars.com/api/?name=${firstName}+${lastName}`;
-    if ((fullName.length = 1))
+    if (fullName.length === 1)
       avatar = `https://ui-avatars.com/api/?name=${firstName}`;
 
     const colaborador = await createColaboradorService.execute({
