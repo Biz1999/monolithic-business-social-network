@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
 import { ShowSaudeColaboradorScoreService } from "../services/ShowSaudeColaboradorScoreService";
 
-class ShowMonthlyColaboradorScoreController {
+class ShowAnotherColaboradorScoreController {
   async handle(request: Request, response: Response) {
     try {
-      const { colaborador_id } = request;
+      const { id } = request.params;
       const { redirect_month } = request.query;
       const showSaudeColaboradorScoreService =
         new ShowSaudeColaboradorScoreService();
 
       const score = await showSaudeColaboradorScoreService.execute({
-        id: colaborador_id,
+        id,
         month: Number(redirect_month),
       });
 
@@ -21,4 +21,4 @@ class ShowMonthlyColaboradorScoreController {
   }
 }
 
-export { ShowMonthlyColaboradorScoreController };
+export { ShowAnotherColaboradorScoreController };

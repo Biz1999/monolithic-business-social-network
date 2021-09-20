@@ -20,7 +20,11 @@ import { ListAllDocumentsByIdController } from "./controllers/ListAllDocumentsBy
 import { ListAllColaboradoresPostsController } from "./controllers/ListAllColaboradoresPostsController";
 import { ListColaboradoresScoresController } from "./controllers/ListColaboradoresScoresController";
 import { CreateFileController } from "./controllers/CreateFileController";
-import { ShowMonthlyColaboradorScoreController } from "./controllers/ShowSaudeColaboradorController";
+import { ShowSaudeColaboradorScoreController } from "./controllers/ShowSaudeColaboradorScoreController";
+import { ShowAnotherColaboradorScoreController } from "./controllers/ShowAnotherSaudeColaboradorScoreController";
+import { ShowConhecimentoColaboradorScoreController } from "./controllers/ShowConhecimentoColaboradorScoreController";
+import { ShowAnotherConhecimentoColaboradorScoreController } from "./controllers/ShowAnotherConhecimentoColaboradorScoreController";
+import { ShowInternoColaboradorScoreController } from "./controllers/ShowInternoColaboradorScoreController";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -57,19 +61,21 @@ const listAllColaboradoresPostsController =
   new ListAllColaboradoresPostsController();
 const listColaboradoresScoresController =
   new ListColaboradoresScoresController();
-const showMonthlyColaboradorScoreController =
-  new ShowMonthlyColaboradorScoreController();
+const showSaudeColaboradorScoreController =
+  new ShowSaudeColaboradorScoreController();
+const showAnotherSaudeColaboradorScoreController =
+  new ShowAnotherColaboradorScoreController();
+const showConhecimentoColaboradorScoreController =
+  new ShowConhecimentoColaboradorScoreController();
+const showAnotherConhecimentoColaboradorScoreController =
+  new ShowAnotherConhecimentoColaboradorScoreController();
+const showInternoColaboradorScoreService =
+  new ShowInternoColaboradorScoreController();
 
 router.get(
   "/colaborador",
   ensureAuthenticated,
   sendColaboradorDataController.handle
-);
-
-router.get(
-  "/colaborador/score",
-  ensureAuthenticated,
-  showMonthlyColaboradorScoreController.handle
 );
 
 router.patch(
@@ -113,6 +119,17 @@ router.get(
   ensurePagination,
   listAllColaboradoresPostsController.handle
 );
+router.get(
+  "/pilares/saude/score",
+  ensureAuthenticated,
+  showSaudeColaboradorScoreController.handle
+);
+router.get(
+  "/pilares/saude/score/:id",
+  ensureAuthenticated,
+  showAnotherSaudeColaboradorScoreController.handle
+);
+
 router.post(
   "/pilares/conhecimento",
   ensureAuthenticated,
@@ -129,6 +146,17 @@ router.get(
   ensureAuthenticated,
   listAllDocumentsByIdController.handle
 );
+router.get(
+  "/pilares/conhecimento/score",
+  ensureAuthenticated,
+  showConhecimentoColaboradorScoreController.handle
+);
+router.get(
+  "/pilares/conhecimento/score/:id",
+  ensureAuthenticated,
+  showAnotherConhecimentoColaboradorScoreController.handle
+);
+
 router.post(
   "/pilares/interno",
   ensureAuthenticated,
@@ -139,6 +167,11 @@ router.patch(
   ensureAuthenticated,
   upload.single("image"),
   createSingleImageController.handle
+);
+router.get(
+  "/pilares/interno/:nome",
+  ensureAuthenticated,
+  showInternoColaboradorScoreService.handle
 );
 
 export { router };
