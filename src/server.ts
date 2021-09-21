@@ -16,8 +16,13 @@ const bootstrap = async () => {
   app.use(express.json());
 
   app.use(router);
-
-  app.use("/cdn", ensureAuthenticated, express.static("../public"));
+  app.use(
+    "/cdn",
+    ensureAuthenticated,
+    express.static(
+      "../../../SPI Integracao de Sistemas Ltda/Superar-Para-Inovar-CDN - API-Armazenamento"
+    )
+  );
 
   app.use(
     (err: Error, request: Request, response: Response, next: NextFunction) => {
