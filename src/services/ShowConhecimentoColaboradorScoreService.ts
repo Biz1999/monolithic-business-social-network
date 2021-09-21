@@ -21,6 +21,7 @@ class ShowConhecimentoColaboradorScoreService {
       .select("SUM(pilar.pontuacao)", "pontuacao_do_mes")
       .getRawOne();
 
+    if (score.pontuacao_do_mes === null) score.pontuacao_do_mes = 0;
     return score;
   }
 }

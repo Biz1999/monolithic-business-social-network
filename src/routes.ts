@@ -25,18 +25,20 @@ import { ShowAnotherColaboradorScoreController } from "./controllers/ShowAnother
 import { ShowConhecimentoColaboradorScoreController } from "./controllers/ShowConhecimentoColaboradorScoreController";
 import { ShowAnotherConhecimentoColaboradorScoreController } from "./controllers/ShowAnotherConhecimentoColaboradorScoreController";
 import { ShowInternoColaboradorScoreController } from "./controllers/ShowInternoColaboradorScoreController";
+import { ShowAllPillarColaborador } from "./controllers/ShowAllPillarColaborador";
+import { ShowAllPillarFromAnotherColaborador } from "./controllers/ShowAllPillarFromAnotherColaborador";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dir = `../public/${req.colaborador_id}`;
+    const dir = `../../../SPI Integracao de Sistemas Ltda/Superar-Para-Inovar-CDN - API-Armazenamento/${req.colaborador_id}`;
+
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir);
     }
     cb(null, dir);
   },
   filename: (req, file, cb) => {
-    const filename = path.parse(file.originalname).name;
-    cb(null, `${Date.now()}${filename}.${mime.extension(file.mimetype)}`);
+    cb(null, `${Date.now()}.${mime.extension(file.mimetype)}`);
   },
 });
 const router = Router();
@@ -71,11 +73,25 @@ const showAnotherConhecimentoColaboradorScoreController =
   new ShowAnotherConhecimentoColaboradorScoreController();
 const showInternoColaboradorScoreService =
   new ShowInternoColaboradorScoreController();
+const showAllPillarColaborador = new ShowAllPillarColaborador();
+new ShowInternoColaboradorScoreController();
+const showAllPillarFromAnotherColaborador =
+  new ShowAllPillarFromAnotherColaborador();
 
 router.get(
   "/colaborador",
   ensureAuthenticated,
   sendColaboradorDataController.handle
+);
+router.get(
+  "/colaborador/score",
+  ensureAuthenticated,
+  showAllPillarColaborador.handle
+);
+router.get(
+  "/colaborador/score/:id",
+  ensureAuthenticated,
+  showAllPillarFromAnotherColaborador.handle
 );
 
 router.patch(
