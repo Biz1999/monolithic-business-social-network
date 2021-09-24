@@ -27,6 +27,7 @@ import { ShowAnotherConhecimentoColaboradorScoreController } from "./controllers
 import { ShowInternoColaboradorScoreController } from "./controllers/ShowInternoColaboradorScoreController";
 import { ShowAllPillarColaborador } from "./controllers/ShowAllPillarColaborador";
 import { ShowAllPillarFromAnotherColaborador } from "./controllers/ShowAllPillarFromAnotherColaborador";
+import { ShowColaboradorRankingController } from "./controllers/ShowColaboradorRankingController";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -77,6 +78,7 @@ const showAllPillarColaborador = new ShowAllPillarColaborador();
 new ShowInternoColaboradorScoreController();
 const showAllPillarFromAnotherColaborador =
   new ShowAllPillarFromAnotherColaborador();
+const showColaboradorRankingController = new ShowColaboradorRankingController();
 
 router.get(
   "/colaborador",
@@ -87,6 +89,11 @@ router.get(
   "/colaborador/score",
   ensureAuthenticated,
   showAllPillarColaborador.handle
+);
+router.get(
+  "/colaborador/ranking",
+  ensureAuthenticated,
+  showColaboradorRankingController.handle
 );
 router.get(
   "/colaborador/score/:id",

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { AuthenticateColaboradorService } from "../services/AuthenticateColaboradorService";
+import { ShowColaboradorRankingService } from "../services/ShowColaboradorRankingService";
 
 class AuthenticateColaboradorController {
   async handle(request: Request, response: Response) {
