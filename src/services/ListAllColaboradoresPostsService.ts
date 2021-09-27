@@ -1,6 +1,6 @@
 import { classToPlain } from "class-transformer";
 import { getCustomRepository } from "typeorm";
-import { ImageRepositories } from "../repositories/ImageRepositories";
+import { SaudeRepositories } from "../repositories/SaudeRepositories";
 
 interface IPhotosRequest {
   start: number;
@@ -10,23 +10,17 @@ interface IPhotosRequest {
 
 class ListAllColaboradoresPostsService {
   async execute({ start, limit, colaborador_id }: IPhotosRequest) {
-    const imageRepositories = getCustomRepository(ImageRepositories);
+    const saudeRepositories = getCustomRepository(SaudeRepositories);
 
-    const photos = await imageRepositories.find({
-      where: {
-        postId: {
-          pilarId: {
-            colaborador_id: colaborador_id,
-          },
-        },
-      },
-      relations: ["postId", "postId.pilarId"],
-      order: {
-        created_at: "DESC",
-      },
-      skip: start,
-      take: limit,
-    });
+    const photos = saudeRepositories
+      .createQueryBuilder("post")
+      .leftJoinAndSelect("post.pilarId", "pilar")
+      .where("pilar.colaborador_id = :id", { id: colaborador_id })
+      .orderBy("pilar.created_at", "DESC")
+      .leftJoinAndSelect("post.photos", "photos")
+      .skip(start)
+      .take(limit)
+      .getMany();
 
     return classToPlain(photos);
   }

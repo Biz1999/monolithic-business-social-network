@@ -22,6 +22,7 @@ class ListColaboradoresScoresService {
       })
       .offset(start)
       .limit(limit)
+      .cache(true)
       .getRawMany();
 
     return scores;

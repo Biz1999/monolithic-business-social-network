@@ -16,13 +16,13 @@ export class Image {
   @PrimaryColumn()
   readonly id: string;
 
-  @Expose({ name: "id_pilar_saude" })
+  @Exclude()
   @Column()
   post_id: string;
 
   @Expose({ name: "post" })
   @JoinColumn({ name: "post_id" })
-  @ManyToOne(() => Saude)
+  @ManyToOne(() => Saude, (saude) => saude.photos)
   postId: Saude;
 
   @Column()

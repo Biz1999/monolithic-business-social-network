@@ -6,8 +6,10 @@ import {
   UpdateDateColumn,
   JoinColumn,
   OneToOne,
+  OneToMany,
 } from "typeorm";
 import { Pilar } from "./Pilar";
+import { Image } from "./Image";
 import { v4 as uuid } from "uuid";
 import { Exclude, Expose } from "class-transformer";
 
@@ -16,7 +18,8 @@ export class Saude {
   @PrimaryColumn()
   readonly id: string;
 
-  @Expose({ name: "id_pilar" })
+  // @Expose({ name: "id_pilar" })
+  @Exclude()
   @Column()
   pilar_id: string;
 
@@ -34,6 +37,9 @@ export class Saude {
   @Exclude()
   @Column()
   isAvailable: boolean;
+
+  @OneToMany((type) => Image, (image) => image.postId)
+  photos: Image[];
 
   @Exclude()
   @CreateDateColumn()
