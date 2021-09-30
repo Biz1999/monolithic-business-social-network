@@ -7,12 +7,14 @@ import { router } from "./routes";
 
 import { postgreDB } from "./database";
 import { ensureAuthenticated } from "./middlewares/ensureAuthenticated";
+import cors from "cors";
 
 const app = express();
 
 const bootstrap = async () => {
   await postgreDB();
 
+  app.use(cors());
   app.use(express.json());
 
   app.use(router);
