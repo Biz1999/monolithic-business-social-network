@@ -9,12 +9,14 @@ import {
 } from "typeorm";
 import { Conhecimento } from "./Conhecimento";
 import { v4 as uuid } from "uuid";
+import { Exclude } from "class-transformer";
 
 @Entity("files")
 export class File {
   @PrimaryColumn()
   readonly id: string;
 
+  @Exclude()
   @Column()
   conhecimento_id: string;
 
@@ -25,9 +27,11 @@ export class File {
   @Column()
   uri: string;
 
+  @Exclude()
   @CreateDateColumn()
   created_at: string;
 
+  @Exclude()
   @UpdateDateColumn()
   updated_at: string;
 

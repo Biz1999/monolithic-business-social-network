@@ -17,19 +17,8 @@ class ListAllDocumentsByIdService {
       .leftJoinAndSelect("documento.pilarId", "pilar")
       .where("pilar.colaborador_id = :id", { id: colaborador_id })
       .orderBy("pilar.created_at", "DESC")
-      // .leftJoinAndSelect("post.photos", "photos")
+      //.leftJoinAndSelect("documento.files", "files")
       .getMany();
-    // const documents = await conhecimentoRepositories.find({
-    //   where: {
-    //     pilarId: {
-    //       colaborador_id: colaborador_id,
-    //     },
-    //   },
-    //   order: {
-    //     created_at: "DESC",
-    //   },
-    //   relations: ["pilarId"],
-    // });
 
     return classToPlain(documents);
   }

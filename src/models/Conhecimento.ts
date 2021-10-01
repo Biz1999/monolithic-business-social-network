@@ -6,10 +6,12 @@ import {
   UpdateDateColumn,
   JoinColumn,
   OneToOne,
+  OneToMany,
 } from "typeorm";
 import { Pilar } from "./Pilar";
 import { v4 as uuid } from "uuid";
 import { Exclude, Expose } from "class-transformer";
+import { File } from "./File";
 
 @Entity("conhecimento")
 export class Conhecimento {
@@ -36,6 +38,9 @@ export class Conhecimento {
 
   @Column({ nullable: true, select: false })
   file: string;
+
+  @OneToMany((type) => File, (file) => file.conhecimentoId)
+  files: File[];
 
   @Exclude()
   @CreateDateColumn()
