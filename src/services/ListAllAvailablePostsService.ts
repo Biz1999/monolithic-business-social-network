@@ -12,19 +12,14 @@ class ListAllAvailablePostsService {
   async execute({ start, limit }: IFeedRequest) {
     const saudeRepositories = getCustomRepository(SaudeRepositories);
 
-    let feed: Saude[];
-
-    feed = await saudeRepositories.find({
-      where: {
-        isAvailable: true,
-      },
-      relations: ["pilarId", "pilarId.colaboradorId"],
-      order: {
-        created_at: "DESC",
-      },
-      skip: start,
-      take: limit,
-    });
+    const feed = await saudeRepositories
+      .createQueryBuilder("saude")
+      .where("saude.isAvailable = 'true'")
+      .leftJoinAndSelect("saude.pilarId", "pilar")
+      .leftJoinAndSelect("pilar.colaboradorId", "colaborador")
+      .andWhere("pilar.status = 'aprovado'")
+      .leftJoinAndSelect("saude.photos", "photosss")
+      .getMany();
 
     return classToPlain(feed);
   }
