@@ -20,6 +20,7 @@ class ListAllColaboradoresPostsService {
       .leftJoinAndSelect("post.photos", "photos")
       .skip(start)
       .take(limit)
+      .cache({ id: "userScore", milliseconds: 25000 })
       .getMany();
 
     return classToPlain(photos);

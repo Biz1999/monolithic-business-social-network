@@ -19,6 +19,9 @@ class ListAllAvailablePostsService {
       .leftJoinAndSelect("pilar.colaboradorId", "colaborador")
       .andWhere("pilar.status = 'aprovado'")
       .leftJoinAndSelect("saude.photos", "photosss")
+      .orderBy("pilar.created_at", "DESC")
+      .skip(start)
+      .take(limit)
       .getMany();
 
     return classToPlain(feed);

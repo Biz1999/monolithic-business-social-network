@@ -20,7 +20,7 @@ const bootstrap = async () => {
   app.use(router);
   app.use(
     "/cdn",
-    ensureAuthenticated,
+    //ensureAuthenticated,
     express.static(
       "../../../SPI Integracao de Sistemas Ltda/Superar-Para-Inovar-CDN - API-Armazenamento"
     )

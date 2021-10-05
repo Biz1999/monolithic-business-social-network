@@ -1,3 +1,4 @@
+import { classToClass, classToPlain } from "class-transformer";
 import { getCustomRepository } from "typeorm";
 import { PilarRepositories } from "../repositories/PilarRepositories";
 
@@ -22,7 +23,6 @@ class ListColaboradoresScoresService {
       })
       .offset(start)
       .limit(limit)
-      .cache(true)
       .getRawMany();
 
     return scores;
