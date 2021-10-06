@@ -3,6 +3,7 @@ import ip from "ip";
 
 import { CreateImageService } from "../services/CreateImageService";
 import { CreateSPimageService } from "../services/CreateSPimageService";
+import { ShowSaudePillarDataService } from "../services/ShowSaudePillarDataService";
 
 export interface Photo {
   fieldname: string;
@@ -16,7 +17,7 @@ export interface Photo {
 }
 
 class CreateImageController {
-  handle(request: Request, response: Response) {
+  async handle(request: Request, response: Response) {
     const files = request.files as Photo[];
     const { colaborador_id } = request;
     let post_id: string;
@@ -26,28 +27,23 @@ class CreateImageController {
 
     const createImageService = new CreateImageService();
     const createSPimageService = new CreateSPimageService();
+    const showSaudePillarDataService = new ShowSaudePillarDataService();
 
     const now = Date.now();
-    files.forEach(async (file) => {
+    const promises = files.map(async (file) => {
       const uri = `http://192.168.11.79:8000/cdn/${colaborador_id}/${file.filename}`;
-      try {
-        Promise.all([
-          createImageService.execute({ post_id, uri }),
-          new Promise((r) => setTimeout(r, 500)),
-          createSPimageService.execute({
-            colaborador_id,
-            post_id,
-            filename: file.filename,
-            path: file.path,
-            now,
-          }),
-        ]);
-      } catch (error) {
-        throw new Error(error);
-      }
+      return await createImageService.execute({ post_id, uri });
     });
 
-    return response.status(201).json("Upload concluído");
+    await Promise.all(promises);
+
+    return new Promise(function () {
+      setTimeout(() => {
+        showSaudePillarDataService.execute({ post_id }).then((photos) => {
+          return response.status(201).json(photos);
+        });
+      }, 0);
+    });
   }
 }
 

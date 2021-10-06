@@ -3,6 +3,7 @@ import ip from "ip";
 
 import { CreateFileService } from "../services/CreateFileService";
 import { CreateSPDocumentService } from "../services/CreateSPDocumentService";
+import { ShowConhecimentoPillarDataService } from "../services/ShowConhecimentoPillarDataService";
 
 export interface Photo {
   fieldname: string;
@@ -25,29 +26,27 @@ class CreateFileController {
     }
 
     const createFileService = new CreateFileService();
+    const showConhecimentoPillarDataService =
+      new ShowConhecimentoPillarDataService();
     const createSPDocumentService = new CreateSPDocumentService();
 
     const now = Date.now();
-    files.forEach(async (file) => {
-      const uri = `http://177.190.201.227:3000/cdn/${colaborador_id}/${file.filename}`;
-      try {
-        Promise.all([
-          createFileService.execute({ conhecimento_id, uri }),
-          new Promise((r) => setTimeout(r, 500)),
-          createSPDocumentService.execute({
-            colaborador_id,
-            conhecimento_id,
-            filename: file.filename,
-            path: file.path,
-            now,
-          }),
-        ]);
-      } catch (error) {
-        throw new Error("Upload não efetuado");
-      }
+    const promises = files.map(async (file) => {
+      const uri = `http://192.168.11.79:8000/cdn/${colaborador_id}/${file.filename}`;
+      return await createFileService.execute({ conhecimento_id, uri });
     });
 
-    return response.status(201).json("Upload concluído");
+    Promise.all(promises);
+
+    return new Promise(function () {
+      setTimeout(() => {
+        showConhecimentoPillarDataService
+          .execute({ conhecimento_id })
+          .then((files) => {
+            return response.status(201).json(files);
+          });
+      }, 0);
+    });
   }
 }
 

@@ -1,5 +1,6 @@
 import { getCustomRepository } from "typeorm";
 import { ImageRepositories } from "../repositories/ImageRepositories";
+import { SaudeRepositories } from "../repositories/SaudeRepositories";
 
 interface IImageRequest {
   post_id: string;
