@@ -26,7 +26,7 @@ export class Pilar {
   colaboradorId: Colaborador;
 
   @Column()
-  pontuacao: string;
+  pontuacao: Number;
 
   @Column()
   status: string;
