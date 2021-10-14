@@ -5,6 +5,7 @@ import mime from "mime";
 import multer from "multer";
 import { ensurePagination } from "./middlewares/ensurePagination";
 import { ensureAuthenticated } from "./middlewares/ensureAuthenticated";
+import { ensureAdmin } from "./middlewares/ensureAdmin";
 import { CreateColaboradorController } from "./controllers/CreateColaboradorController";
 import { CreatePilarController } from "./controllers/CreatePilarController";
 import { CreateSaudeController } from "./controllers/CreateSaudeController";
@@ -204,6 +205,7 @@ router.get(
 router.get(
   "/pilares/conhecimento/pendentes",
   ensureAuthenticated,
+  ensureAdmin,
   ensurePagination,
   listAllPendenteConhecimentoController.handle
 );

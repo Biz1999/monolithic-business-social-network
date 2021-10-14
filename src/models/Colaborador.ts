@@ -36,6 +36,14 @@ export class Colaborador {
   avatar: string;
 
   @Exclude()
+  @Column()
+  isAdmin: boolean;
+
+  @Exclude()
+  @Column()
+  isActive: boolean;
+
+  @Exclude()
   @CreateDateColumn()
   created_at: Date;
 

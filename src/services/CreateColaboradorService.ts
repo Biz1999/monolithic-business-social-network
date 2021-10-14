@@ -34,7 +34,7 @@ class CreateColaboradorService {
     const hashedPassword = await hash(password, 8);
 
     const colaborador = colaboradorRepository.create({
-      nome,
+      nome: nome.trim(),
       email,
       password: hashedPassword,
       setor,

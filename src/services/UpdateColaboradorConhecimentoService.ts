@@ -17,7 +17,6 @@ class UpdateColaboradorConhecimentoService {
     pontuacao,
   }: IUpdatePillarRequest) {
     const pilarRepositories = getCustomRepository(PilarRepositories);
-    console.log(pontuacao);
     if (!pillar_id)
       throw new Error("Necessário informar o identificado do pilar");
     if (status !== "aprovado" && status !== "recusado")

@@ -1,5 +1,6 @@
 import { getCustomRepository } from "typeorm";
 import { ColaboradorRepositories } from "../repositories/ColaboradorRepositories";
+import { classToPlain } from "class-transformer";
 
 interface IImageRequest {
   colaborador_id: string;
@@ -20,7 +21,7 @@ class UpdateColaboradorAvatarService {
       avatar,
     });
 
-    return colaborador;
+    return classToPlain(colaborador);
   }
 }
 
