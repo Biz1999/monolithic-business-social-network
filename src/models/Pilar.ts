@@ -8,7 +8,7 @@ import {
   ManyToOne,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
-import { Exclude } from "class-transformer";
+import { Exclude, Expose } from "class-transformer";
 import { Colaborador } from "./Colaborador";
 
 @Entity("pilares")
@@ -16,23 +16,26 @@ export class Pilar {
   @PrimaryColumn()
   readonly id: string;
 
+  @Exclude()
   @Column()
   colaborador_id: string;
 
+  @Expose({ name: "colaborador" })
   @JoinColumn({ name: "colaborador_id" })
   @ManyToOne(() => Colaborador)
   colaboradorId: Colaborador;
 
   @Column()
-  pontuacao: string;
+  pontuacao: Number;
 
   @Column()
   status: string;
 
+  @Expose({ name: "data_inclusao" })
   @CreateDateColumn()
   created_at: string;
 
-  @Exclude()
+  @Expose({ name: "data_alteracao" })
   @UpdateDateColumn()
   updated_at: string;
 

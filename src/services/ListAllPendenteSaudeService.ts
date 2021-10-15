@@ -2,29 +2,28 @@ import { classToPlain } from "class-transformer";
 import { getCustomRepository } from "typeorm";
 import { SaudeRepositories } from "../repositories/SaudeRepositories";
 
-interface IPhotosRequest {
+interface IDocumentsRequest {
   start: number;
   limit: number;
-  colaborador_id: string;
 }
 
-class ListAllColaboradoresPostsService {
-  async execute({ start, limit, colaborador_id }: IPhotosRequest) {
+class ListAllPendenteSaudeService {
+  async execute({ start, limit }: IDocumentsRequest) {
     const saudeRepositories = getCustomRepository(SaudeRepositories);
 
-    const photos = saudeRepositories
+    const pendentes = await saudeRepositories
       .createQueryBuilder("post")
       .leftJoinAndSelect("post.pilarId", "pilar")
-      .where("pilar.colaborador_id = :id", { id: colaborador_id })
-      .orderBy("pilar.created_at", "DESC")
+      .leftJoinAndSelect("pilar.colaboradorId", "colaborador")
+      .where("pilar.status = :status", { status: "pendente" })
+      .orderBy("pilar.created_at", "ASC")
       .leftJoinAndSelect("post.photos", "photos")
       .skip(start)
       .take(limit)
-      .cache({ id: "userScore", milliseconds: 25000 })
       .getMany();
 
-    return classToPlain(photos);
+    return classToPlain(pendentes);
   }
 }
 
-export { ListAllColaboradoresPostsService };
+export { ListAllPendenteSaudeService };

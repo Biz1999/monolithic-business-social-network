@@ -10,7 +10,6 @@ import { v4 as uuid } from "uuid";
 
 @Entity("colaboradores")
 export class Colaborador {
-  @Exclude()
   @PrimaryColumn()
   readonly id: string;
 
@@ -35,6 +34,14 @@ export class Colaborador {
 
   @Column()
   avatar: string;
+
+  @Exclude()
+  @Column()
+  isAdmin: boolean;
+
+  @Exclude()
+  @Column()
+  isActive: boolean;
 
   @Exclude()
   @CreateDateColumn()

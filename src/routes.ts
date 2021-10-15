@@ -5,6 +5,7 @@ import mime from "mime";
 import multer from "multer";
 import { ensurePagination } from "./middlewares/ensurePagination";
 import { ensureAuthenticated } from "./middlewares/ensureAuthenticated";
+import { ensureAdmin } from "./middlewares/ensureAdmin";
 import { CreateColaboradorController } from "./controllers/CreateColaboradorController";
 import { CreatePilarController } from "./controllers/CreatePilarController";
 import { CreateSaudeController } from "./controllers/CreateSaudeController";
@@ -27,6 +28,12 @@ import { ShowAnotherConhecimentoColaboradorScoreController } from "./controllers
 import { ShowInternoColaboradorScoreController } from "./controllers/ShowInternoColaboradorScoreController";
 import { ShowAllPillarColaborador } from "./controllers/ShowAllPillarColaborador";
 import { ShowAllPillarFromAnotherColaborador } from "./controllers/ShowAllPillarFromAnotherColaborador";
+import { ShowColaboradorRankingController } from "./controllers/ShowColaboradorRankingController";
+import { ListAllPendenteSaudeController } from "./controllers/ListAllPendenteSaudeController";
+import { ListAllPendenteConhecimentoController } from "./controllers/ListAllPendenteConhecimentoController";
+import { UpdateColaboradorSaudeController } from "./controllers/UpdateColaboradorSaudeController";
+import { UpdateColaboradorConhecimentoController } from "./controllers/UpdateColaboradorConhecimentoController";
+import { UpdateColaboradorDataController } from "./controllers/UpdateColaboradorDataController";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -77,16 +84,35 @@ const showAllPillarColaborador = new ShowAllPillarColaborador();
 new ShowInternoColaboradorScoreController();
 const showAllPillarFromAnotherColaborador =
   new ShowAllPillarFromAnotherColaborador();
+const showColaboradorRankingController = new ShowColaboradorRankingController();
+const listAllPendenteSaudeController = new ListAllPendenteSaudeController();
+const listAllPendenteConhecimentoController =
+  new ListAllPendenteConhecimentoController();
+
+const updateColaboradorSaudeController = new UpdateColaboradorSaudeController();
+const updateColaboradorConhecimentoController =
+  new UpdateColaboradorConhecimentoController();
+const updateColaboradorDataController = new UpdateColaboradorDataController();
 
 router.get(
   "/colaborador",
   ensureAuthenticated,
   sendColaboradorDataController.handle
 );
+router.put(
+  "/colaborador",
+  ensureAuthenticated,
+  updateColaboradorDataController.handle
+);
 router.get(
   "/colaborador/score",
   ensureAuthenticated,
   showAllPillarColaborador.handle
+);
+router.get(
+  "/colaborador/ranking",
+  ensureAuthenticated,
+  showColaboradorRankingController.handle
 );
 router.get(
   "/colaborador/score/:id",
@@ -136,6 +162,18 @@ router.get(
   listAllColaboradoresPostsController.handle
 );
 router.get(
+  "/pilares/saude/pendentes",
+  ensureAuthenticated,
+  ensureAdmin,
+  ensurePagination,
+  listAllPendenteSaudeController.handle
+);
+router.put(
+  "/pilares/saude/pendente/:pillar_id",
+  ensureAuthenticated,
+  updateColaboradorSaudeController.handle
+);
+router.get(
   "/pilares/saude/score",
   ensureAuthenticated,
   showSaudeColaboradorScoreController.handle
@@ -171,6 +209,18 @@ router.get(
   "/pilares/conhecimento/score/:id",
   ensureAuthenticated,
   showAnotherConhecimentoColaboradorScoreController.handle
+);
+router.get(
+  "/pilares/conhecimento/pendentes",
+  ensureAuthenticated,
+  ensureAdmin,
+  ensurePagination,
+  listAllPendenteConhecimentoController.handle
+);
+router.put(
+  "/pilares/conhecimento/pendente/:pillar_id",
+  ensureAuthenticated,
+  updateColaboradorConhecimentoController.handle
 );
 
 router.post(

@@ -1,3 +1,4 @@
+import { classToClass, classToPlain } from "class-transformer";
 import { getCustomRepository } from "typeorm";
 import { PilarRepositories } from "../repositories/PilarRepositories";
 

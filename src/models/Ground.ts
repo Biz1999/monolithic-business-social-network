@@ -1,53 +1,48 @@
 import {
-  Entity,
-  PrimaryColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
+  Entity,
   JoinColumn,
   OneToOne,
-  OneToMany,
+  PrimaryColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { Pilar } from "./Pilar";
-import { Image } from "./Image";
+import { Colaborador } from "./Colaborador";
 import { v4 as uuid } from "uuid";
-import { Exclude, Expose } from "class-transformer";
+import { Exclude } from "class-transformer";
 
-@Entity("saude")
-export class Saude {
+@Entity("grounds")
+export class Ground {
   @PrimaryColumn()
   readonly id: string;
 
-  // @Expose({ name: "id_pilar" })
   @Exclude()
   @Column()
   pilar_id: string;
 
-  @Expose({ name: "pilar" })
   @JoinColumn({ name: "pilar_id" })
   @OneToOne(() => Pilar)
   pilarId: Pilar;
 
-  @Column()
-  categoria: string;
-
-  @Column()
-  legenda: string;
-
   @Exclude()
   @Column()
-  isAvailable: boolean;
+  colaborador_id: string;
 
-  @OneToMany((type) => Image, (image) => image.postId)
-  photos: Image[];
+  @JoinColumn({ name: "colaborador_id" })
+  @OneToOne(() => Colaborador)
+  colaboradorId: Colaborador;
+
+  @Column()
+  descricao: string;
 
   @Exclude()
   @CreateDateColumn()
-  created_at: Date;
+  created_at: string;
 
   @Exclude()
   @UpdateDateColumn()
-  updated_at: Date;
+  updated_at: string;
 
   constructor() {
     if (!this.id) {
