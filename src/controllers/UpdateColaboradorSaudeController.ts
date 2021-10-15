@@ -3,7 +3,8 @@ import { UpdateColaboradorSaudeService } from "../services/UpdateColaboradorSaud
 
 class UpdateColaboradorSaudeController {
   async handle(request: Request, response: Response) {
-    const { status, categoria } = request.body;
+    const { status, categoria, justificativa } = request.body;
+    const { colaborador_id } = request;
     const { pillar_id } = request.params;
     const updateColaboradorSaudeService = new UpdateColaboradorSaudeService();
 
@@ -11,6 +12,8 @@ class UpdateColaboradorSaudeController {
       pillar_id,
       status,
       categoria,
+      justificativa,
+      colaborador_id,
     });
 
     return response.status(201).json(pilar);

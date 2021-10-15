@@ -14,7 +14,12 @@ class UpdateColaboradorDataService {
       ColaboradorRepositories
     );
 
-    if (!nome || !setor) throw new Error("Dados faltantes");
+    if (!nome) throw new Error("Nome não informado");
+    if (!setor) throw new Error("Setor não informado");
+
+    const setores = ["ADM", "AT", "IC", "IT", "OT", "PMO", "SUL", "VENDAS"];
+
+    if (!setores.includes(setor)) throw new Error("Setor não reconhecido");
 
     try {
       const colaborador = await colaboradorRepositories.save({

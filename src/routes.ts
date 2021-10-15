@@ -33,6 +33,7 @@ import { ListAllPendenteSaudeController } from "./controllers/ListAllPendenteSau
 import { ListAllPendenteConhecimentoController } from "./controllers/ListAllPendenteConhecimentoController";
 import { UpdateColaboradorSaudeController } from "./controllers/UpdateColaboradorSaudeController";
 import { UpdateColaboradorConhecimentoController } from "./controllers/UpdateColaboradorConhecimentoController";
+import { UpdateColaboradorDataController } from "./controllers/UpdateColaboradorDataController";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -91,11 +92,17 @@ const listAllPendenteConhecimentoController =
 const updateColaboradorSaudeController = new UpdateColaboradorSaudeController();
 const updateColaboradorConhecimentoController =
   new UpdateColaboradorConhecimentoController();
+const updateColaboradorDataController = new UpdateColaboradorDataController();
 
 router.get(
   "/colaborador",
   ensureAuthenticated,
   sendColaboradorDataController.handle
+);
+router.put(
+  "/colaborador",
+  ensureAuthenticated,
+  updateColaboradorDataController.handle
 );
 router.get(
   "/colaborador/score",
@@ -157,6 +164,7 @@ router.get(
 router.get(
   "/pilares/saude/pendentes",
   ensureAuthenticated,
+  ensureAdmin,
   ensurePagination,
   listAllPendenteSaudeController.handle
 );

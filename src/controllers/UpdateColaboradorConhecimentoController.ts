@@ -3,7 +3,8 @@ import { UpdateColaboradorConhecimentoService } from "../services/UpdateColabora
 
 class UpdateColaboradorConhecimentoController {
   async handle(request: Request, response: Response) {
-    const { status, categoria, pontuacao } = request.body;
+    const { colaborador_id } = request;
+    const { status, categoria, pontuacao, justificativa } = request.body;
     const { pillar_id } = request.params;
     const updateColaboradorConhecimentoService =
       new UpdateColaboradorConhecimentoService();
@@ -13,6 +14,8 @@ class UpdateColaboradorConhecimentoController {
       status,
       categoria,
       pontuacao: pontuacao,
+      justificativa,
+      colaborador_id,
     });
 
     return response.status(201).json(pilar);
