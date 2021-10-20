@@ -1,3 +1,4 @@
+"use strict";
 import "reflect-metadata";
 import express, { Request, Response, NextFunction } from "express";
 import "express-async-errors";
@@ -55,18 +56,33 @@ const bootstrap = async () => {
 
   // const sslServer = https.createServer(
   //   {
-  //     key: fs.readFileSync(path.join(__dirname, "../cert", "key.pem")),
-  //     cert: fs.readFileSync(path.join(__dirname, "../cert", "cert.pem")),
+  //     key: fs.readFileSync(path.join(__dirname, "../cert", "server.key")),
+  //     cert: fs.readFileSync(path.join(__dirname, "../cert", "server.crt")),
   //   },
   //   app
   // );
 
-  // sslServer.listen(8000, () => {
-  //   console.log(`Ip ${ip.address()}-> Server listenin...`);
-  // });
-  app.listen(8000, () => {
+  app.listen(80, () => {
     console.log(`Ip ${ip.address()}-> Server listenin...`);
   });
+  // sslServer.listen(443, () => {
+  //   console.log(`Ip ${ip.address()}-> Server listenin...`);
+  // });
+
+  require("greenlock-express")
+    .init({
+      packageRoot: __dirname,
+      configDir: "../greenlock.d",
+
+      // contact for security and critical bug notices
+      maintainerEmail: "alessandro.biz@integradora.com.br",
+
+      // whether or not to run at cloudscale
+      cluster: false,
+    })
+    // Serves on 80 and 443
+    // Get's SSL certificates magically!
+    .serve(app);
 };
 
 bootstrap();

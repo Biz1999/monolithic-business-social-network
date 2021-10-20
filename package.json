@@ -33,6 +33,8 @@
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "external-ip": "^2.3.1",
+    "greenlock": "v4",
+    "greenlock-express": "v4",
     "ip": "^1.1.5",
     "jsonwebtoken": "^8.5.1",
     "legit": "^1.0.9",
