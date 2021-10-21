@@ -21,6 +21,7 @@ const bootstrap = async () => {
 
   app.use(cors());
   app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
 
   app.use(router);
   app.use(
@@ -31,6 +32,7 @@ const bootstrap = async () => {
     )
   );
   app.use("/", express.static("public"));
+  app.use("/recover", express.static("recover"));
 
   app.get("*", function (req, res) {
     res
@@ -69,20 +71,20 @@ const bootstrap = async () => {
   //   console.log(`Ip ${ip.address()}-> Server listenin...`);
   // });
 
-  require("greenlock-express")
-    .init({
-      packageRoot: __dirname,
-      configDir: "../greenlock.d",
+  // require("greenlock-express")
+  //   .init({
+  //     packageRoot: __dirname,
+  //     configDir: "../greenlock.d",
 
-      // contact for security and critical bug notices
-      maintainerEmail: "alessandro.biz@integradora.com.br",
+  //     // contact for security and critical bug notices
+  //     maintainerEmail: "alessandro.biz@integradora.com.br",
 
-      // whether or not to run at cloudscale
-      cluster: false,
-    })
-    // Serves on 80 and 443
-    // Get's SSL certificates magically!
-    .serve(app);
+  //     // whether or not to run at cloudscale
+  //     cluster: false,
+  //   })
+  //   // Serves on 80 and 443
+  //   // Get's SSL certificates magically!
+  //   .serve(app);
 };
 
 bootstrap();
