@@ -44,6 +44,10 @@ export class Colaborador {
   isActive: boolean;
 
   @Exclude()
+  @Column()
+  secret_key: string;
+
+  @Exclude()
   @CreateDateColumn()
   created_at: Date;
 

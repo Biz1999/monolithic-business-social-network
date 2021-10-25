@@ -34,6 +34,8 @@ import { ListAllPendenteConhecimentoController } from "./controllers/ListAllPend
 import { UpdateColaboradorSaudeController } from "./controllers/UpdateColaboradorSaudeController";
 import { UpdateColaboradorConhecimentoController } from "./controllers/UpdateColaboradorConhecimentoController";
 import { UpdateColaboradorDataController } from "./controllers/UpdateColaboradorDataController";
+import { RecoverPasswordController } from "./controllers/RecoverPasswordController";
+import { ResetPasswordController } from "./controllers/ResetPasswordController";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -94,6 +96,9 @@ const updateColaboradorConhecimentoController =
   new UpdateColaboradorConhecimentoController();
 const updateColaboradorDataController = new UpdateColaboradorDataController();
 
+const recoverPasswordController = new RecoverPasswordController();
+const resetPasswordController = new ResetPasswordController();
+
 router.get(
   "/colaborador",
   ensureAuthenticated,
@@ -103,6 +108,14 @@ router.put(
   "/colaborador",
   ensureAuthenticated,
   updateColaboradorDataController.handle
+);
+
+router.post("/colaborador/password", recoverPasswordController.handle);
+
+router.post(
+  "/colaborador/:secret_key",
+  ensureAuthenticated,
+  resetPasswordController.handle
 );
 router.get(
   "/colaborador/score",

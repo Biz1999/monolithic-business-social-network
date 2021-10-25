@@ -33,6 +33,8 @@ class CreateColaboradorService {
 
     const hashedPassword = await hash(password, 8);
 
+    // console.log(await hash("Terracota10!@", 8));
+
     const colaborador = colaboradorRepository.create({
       nome: nome.trim(),
       email,

@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.d661e82d.chunk.css",
-    "main.js": "/static/js/main.512f1c81.chunk.js",
-    "main.js.map": "/static/js/main.512f1c81.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.610ca0f8.js",
-    "runtime-main.js.map": "/static/js/runtime-main.610ca0f8.js.map",
-    "static/js/2.84159a95.chunk.js": "/static/js/2.84159a95.chunk.js",
-    "static/js/2.84159a95.chunk.js.map": "/static/js/2.84159a95.chunk.js.map",
-    "static/js/3.6cc63868.chunk.js": "/static/js/3.6cc63868.chunk.js",
-    "static/js/3.6cc63868.chunk.js.map": "/static/js/3.6cc63868.chunk.js.map",
+    "main.css": "/static/css/main.1ea18d96.chunk.css",
+    "main.js": "/static/js/main.c1107907.chunk.js",
+    "main.js.map": "/static/js/main.c1107907.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.1230ce22.js",
+    "runtime-main.js.map": "/static/js/runtime-main.1230ce22.js.map",
+    "static/js/2.f313ab2d.chunk.js": "/static/js/2.f313ab2d.chunk.js",
+    "static/js/2.f313ab2d.chunk.js.map": "/static/js/2.f313ab2d.chunk.js.map",
+    "static/js/3.a08c9e06.chunk.js": "/static/js/3.a08c9e06.chunk.js",
+    "static/js/3.a08c9e06.chunk.js.map": "/static/js/3.a08c9e06.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.d661e82d.chunk.css.map": "/static/css/main.d661e82d.chunk.css.map",
-    "static/js/2.84159a95.chunk.js.LICENSE.txt": "/static/js/2.84159a95.chunk.js.LICENSE.txt",
+    "static/css/main.1ea18d96.chunk.css.map": "/static/css/main.1ea18d96.chunk.css.map",
+    "static/js/2.f313ab2d.chunk.js.LICENSE.txt": "/static/js/2.f313ab2d.chunk.js.LICENSE.txt",
     "static/media/HOME.cde2142c.svg": "/static/media/HOME.cde2142c.svg",
     "static/media/SPI_Logo_semFundo.da322953.svg": "/static/media/SPI_Logo_semFundo.da322953.svg",
     "static/media/Superar_Inovar_SPI_Logo_2021-Color2.25748487.png": "/static/media/Superar_Inovar_SPI_Logo_2021-Color2.25748487.png",
@@ -21,9 +21,9 @@
     "static/media/check_rejeitado.abd7f995.svg": "/static/media/check_rejeitado.abd7f995.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.610ca0f8.js",
-    "static/js/2.84159a95.chunk.js",
-    "static/css/main.d661e82d.chunk.css",
-    "static/js/main.512f1c81.chunk.js"
+    "static/js/runtime-main.1230ce22.js",
+    "static/js/2.f313ab2d.chunk.js",
+    "static/css/main.1ea18d96.chunk.css",
+    "static/js/main.c1107907.chunk.js"
   ]
 }

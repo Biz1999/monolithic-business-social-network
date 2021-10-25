@@ -1,0 +1,95 @@
+.container {
+  position: fixed;
+  padding: 0;
+  margin: 0;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1em;
+  width: 100%;
+  height: 100%;
+}
+
+.form-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1em 5em;
+  border: 2px solid #651d32;
+  border-radius: 0.5em;
+  gap: 1em;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+}
+
+.password {
+  gap: 1em;
+}
+
+.form-submit {
+  background-color: #e35205;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.form-submit:hover {
+  opacity: 0.8;
+}
+
+.form-submit:disabled {
+  opacity: 0.5;
+}
+
+#password-strength-status {
+  text-align: center;
+  max-width: fit-content;
+
+  margin-top: 5px;
+}
+
+.weak-password {
+  background-color: #ff2e2e;
+}
+
+.medium-password {
+  background-color: yellow;
+}
+
+.strong-password {
+  background-color: green;
+}
+
+.hide {
+  display: none;
+}
+input {
+  font-size: medium;
+}
+input:focus {
+  outline-color: #651d32;
+}
+
+strong {
+  color: #651d32;
+}
+
+p {
+  color: #651d32;
+}
