@@ -9,7 +9,6 @@ class RecoverPasswordController {
 
     try {
       const colaborador = await recoverPasswordService.execute({ email });
-
       let transporter = nodemailer.createTransport({
         name: "smtp.office365.com",
         host: "smtp.office365.com",
@@ -312,7 +311,7 @@ class RecoverPasswordController {
                       <img src="https://www.spi-integradora.com.br/wp-content/uploads/SPI-Integradora-Retina-1.png" alt="" style="width: 150px; max-width: 600px; height: auto; margin: auto; display: block;">
                       <h3 class="name" style="color:white">Esqueceu a senha?</h3>
                       <span class="position" style="color:#DEDEDE">Tudo bem, isso acontece! Clique no botão abaixo para redefinir sua senha.</span>
-                       <p><a href='http://192.168.11.79:80/recover?s_token=${colaborador.newPassword.secret_key}&token=${colaborador.token}' class="btn btn-primary">REDEFINIR SUA SENHA</a></p>
+                       <p><a href='http://192.168.11.79:8000/recover?s_token=${colaborador.newPassword.secret_key}&token=${colaborador.token}' class="btn btn-primary">REDEFINIR SUA SENHA</a></p>
                      </div>
                   </td>
                 </tr>
@@ -327,9 +326,11 @@ class RecoverPasswordController {
       </body>
       </html>`,
       });
-      return response.status(200).json(colaborador);
+      return response.status(200).json("Email enviado com sucesso");
     } catch (error) {
-      return response.status(404).json("Not possible to send an email");
+      return response
+        .status(404)
+        .json({ error: "Not possible to send an email" });
     }
   }
 }

@@ -64,7 +64,7 @@ const bootstrap = async () => {
   //   app
   // );
 
-  app.listen(80, () => {
+  app.listen(8000, () => {
     console.log(`Ip ${ip.address()}-> Server listenin...`);
   });
   // sslServer.listen(443, () => {

@@ -1,4 +1,4 @@
-import { Exclude, Expose } from "class-transformer";
+import { Exclude, Expose, Transform } from "class-transformer";
 import {
   Entity,
   PrimaryColumn,
@@ -25,6 +25,7 @@ export class Image {
   @ManyToOne(() => Saude, (saude) => saude.photos)
   postId: Saude;
 
+  // @Transform((value) => `http://192.168.11.79:8000/cdn/${value.value}`)
   @Column()
   uri: string;
 

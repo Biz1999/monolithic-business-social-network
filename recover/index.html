@@ -9,6 +9,11 @@
       href="./static/media/superar-logo.png"
       type="image/x-icon"
     />
+    <!-- Add icon library -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <link rel="stylesheet" href="./static/css/style.css" />
     <title>Recuperação de senha</title>
   </head>
@@ -42,7 +47,10 @@
               class="password-again-input"
             />
           </div>
-          <button class="form-submit" type="submit">SALVAR</button>
+          <button class="form-submit" type="submit">
+            <i class="loading-icon fa fa-circle-o-notch fa-spin hide"></i>
+            <span class="button-text">SALVAR</span>
+          </button>
         </form>
       </div>
     </div>

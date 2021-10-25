@@ -53,9 +53,15 @@
   opacity: 0.8;
 }
 
+.form-submit:disabled {
+  opacity: 0.5;
+}
+
 #password-strength-status {
   text-align: center;
   max-width: fit-content;
+
+  margin-top: 5px;
 }
 
 .weak-password {
@@ -70,6 +76,9 @@
   background-color: green;
 }
 
+.hide {
+  display: none;
+}
 input {
   font-size: medium;
 }

@@ -35,6 +35,7 @@ $(document).ready(function () {
     if (password != password_again) {
       return alert("As senhas inseridas são diferentes");
     }
+
     const urlParams = getUrlVars();
     if (urlParams.hasOwnProperty("s_token")) {
       const token = urlParams["token"];
@@ -43,14 +44,16 @@ $(document).ready(function () {
         password: password,
       };
 
-      console.log(token, s_token, newPassword);
       $.ajaxSetup({
         headers: {
           authorization: `Bearer ${token}`,
         },
       });
 
-      $.post(`http://192.168.11.79:80/colaborador/${s_token}`, newPassword)
+      $(".loading-icon").removeClass("hide");
+      $(".form-submit").attr("disabled", true);
+      $(".button-text").text("Salvando...");
+      $.post(`http://192.168.11.79:8000/colaborador/${s_token}`, newPassword)
         .done(function (data) {
           alert("Senha alterada com sucesso!");
           $(".password-input").val("");
@@ -62,6 +65,10 @@ $(document).ready(function () {
           console.log(error);
           alert("Não foi possível alterar a senha");
         });
+
+      $(".loading-icon").addClass("hide");
+      $(".form-submit").attr("disabled", false);
+      $(".button-text").text("SALVAR");
     }
   });
 });
