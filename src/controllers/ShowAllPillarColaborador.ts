@@ -63,7 +63,7 @@ class ShowAllPillarColaborador {
           .then(({ pontuacao_do_mes }) =>
             scores.push({ pilar: "qualidade", pontuacao_do_mes })
           ),
-      ]).then(() => {});
+      ]);
 
       return response.json(scores);
     } catch (error) {

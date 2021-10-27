@@ -1,7 +1,9 @@
 import { classToPlain } from "class-transformer";
-import { getCustomRepository } from "typeorm";
+import { getConnection, getCustomRepository } from "typeorm";
+import { Pilar } from "../models/Pilar";
 import { GroundRepositories } from "../repositories/GroundRepositories";
 import { PilarRepositories } from "../repositories/PilarRepositories";
+import { redisCleanCache } from "../utils/redisCleanCache";
 
 interface IUpdatePillarRequest {
   pillar_id: string;
@@ -38,11 +40,31 @@ class UpdateColaboradorConhecimentoService {
         categoria === "book" ||
         categoria === "lecture"
       ) {
-        const pilar = await pilarRepositories.save({
-          id: pillar_id,
-          status: status,
-          pontuacao: pontuacao,
-        });
+        redisCleanCache("rankingScore");
+        redisCleanCache("conhecimentoPendentes");
+
+        const updated = await pilarRepositories
+          .createQueryBuilder()
+          .update<Pilar>(Pilar, {
+            status: status,
+            pontuacao: status === "recusado" ? 0 : pontuacao,
+          })
+          .where("id = :id", { id: pillar_id })
+          .returning([
+            "id",
+            "colaborador_id",
+            "pontuacao",
+            "status",
+            "updated_at",
+          ])
+          .updateEntity(true)
+          .execute();
+
+        const pilar: Pilar = updated.raw[0];
+
+        redisCleanCache(`${pilar.colaborador_id}Documents`);
+        redisCleanCache(`${pilar.colaborador_id}Ranking`);
+        redisCleanCache(`${pilar.colaborador_id}Conhecimento`);
 
         if (status === "recusado") {
           const ground = groundRepositories.create({

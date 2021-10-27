@@ -20,6 +20,7 @@ class ListAllPendenteSaudeService {
       .leftJoinAndSelect("post.photos", "photos")
       .skip(start)
       .take(limit)
+      .cache(`saudePendentes:${start}_${limit}`, 3600000)
       .getMany();
 
     return classToPlain(pendentes);

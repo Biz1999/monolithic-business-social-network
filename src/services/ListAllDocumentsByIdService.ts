@@ -17,6 +17,7 @@ class ListAllDocumentsByIdService {
       .leftJoinAndSelect("documento.pilarId", "pilar")
       .where("pilar.colaborador_id = :id", { id: colaborador_id })
       .orderBy("pilar.created_at", "DESC")
+      .cache(`${colaborador_id}Documents:`, 3600000)
       //.leftJoinAndSelect("documento.files", "files")
       .getMany();
 
