@@ -10,14 +10,18 @@ class ShowColaboradorRankingService {
   async execute({ id, month }: IRankingRequest) {
     const pilarRepositories = getCustomRepository(PilarRepositories);
 
+    const start_date = `2021-${month}-10`;
+    const end_date = `2021-${month + 1}-10`;
+
     const ranking = await pilarRepositories
       .createQueryBuilder("pilar")
       .groupBy("pilar.colaborador_id")
-      .where("EXTRACT(MONTH FROM pilar.created_at) = :month", {
-        month,
-      })
+      .where(
+        `'[${start_date}, ${end_date}]'::daterange @> pilar.created_at::date`
+      )
       .select(["SUM(pilar.pontuacao)", "pilar.colaborador_id"])
       .orderBy("sum", "DESC")
+      .cache(`${id}Ranking:all_${month}`, 3600000)
       .getRawMany();
 
     const rankingPosition = ranking.findIndex(

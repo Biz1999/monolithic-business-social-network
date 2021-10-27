@@ -10,14 +10,7 @@ class SendStockUpdateController {
     // console.log(new Date());
     const newData = JSON.parse(request.body.data);
     const estoque: Product = newData.retorno.estoques[0].estoque;
-    const fs = require("fs");
-    let data = fs.readFileSync("src/utils/blingRequests.json");
-    data = JSON.parse(data); //parse the JSON
-    data = [...data, newData];
-    fs.writeFileSync(
-      "src/utils/blingRequests.json",
-      JSON.stringify(data, null, 2)
-    );
+
     const sendStockUpdateService = new SendStockUpdateService();
 
     const stocks_to_update = convertToPsiStock(estoque);

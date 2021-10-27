@@ -1,5 +1,6 @@
 import { getCustomRepository } from "typeorm";
 import { SaudeRepositories } from "../repositories/SaudeRepositories";
+import { redisCleanCache } from "../utils/redisCleanCache";
 import { CreatePilarService } from "./CreatePilarService";
 
 interface ISaudeRequest {
@@ -32,6 +33,8 @@ class CreateSaudeService {
     });
 
     await saudeRepositories.save(saude);
+
+    redisCleanCache(`${colaborador_id}Photos`);
 
     return saude.id;
   }

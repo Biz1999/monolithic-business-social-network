@@ -1,7 +1,9 @@
 import { classToPlain } from "class-transformer";
-import { getCustomRepository } from "typeorm";
+import { getConnection, getCustomRepository } from "typeorm";
+import { Pilar } from "../models/Pilar";
 import { GroundRepositories } from "../repositories/GroundRepositories";
 import { PilarRepositories } from "../repositories/PilarRepositories";
+import { redisCleanCache } from "../utils/redisCleanCache";
 
 interface IUpdatePillarRequest {
   pillar_id: string;
@@ -32,11 +34,26 @@ class UpdateColaboradorSaudeService {
     if (categoria !== "alimentacao" && categoria !== "exercise")
       throw new Error("Categoria não reconhecida");
 
-    const pilar = await pilarRepositories.save({
-      id: pillar_id,
-      status: status,
-      pontuacao: status === "recusado" ? 0 : categoria === "exercise" ? 2 : 1,
-    });
+    redisCleanCache("rankingScore");
+    redisCleanCache("saudePendentes");
+    redisCleanCache("availablePosts");
+
+    const updated = await pilarRepositories
+      .createQueryBuilder()
+      .update<Pilar>(Pilar, {
+        status: status,
+        pontuacao: status === "recusado" ? 0 : categoria === "exercise" ? 2 : 1,
+      })
+      .where("id = :id", { id: pillar_id })
+      .returning(["id", "colaborador_id", "pontuacao", "status", "updated_at"])
+      .updateEntity(true)
+      .execute();
+
+    const pilar: Pilar = updated?.raw[0];
+
+    redisCleanCache(`${pilar.colaborador_id}Photos`);
+    redisCleanCache(`${pilar.colaborador_id}Ranking`);
+    redisCleanCache(`${pilar.colaborador_id}Saude`);
 
     if (status === "recusado") {
       const ground = groundRepositories.create({

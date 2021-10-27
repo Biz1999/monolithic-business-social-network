@@ -2,6 +2,7 @@
 import "reflect-metadata";
 import express, { Request, Response, NextFunction } from "express";
 import "express-async-errors";
+import "./postgres";
 import ip from "ip";
 
 import { router } from "./routes";
@@ -32,6 +33,7 @@ const bootstrap = async () => {
     )
   );
   app.use("/", express.static("public"));
+  app.use("/home", express.static("public"));
   app.use("/recover", express.static("recover"));
 
   app.get("*", function (req, res) {

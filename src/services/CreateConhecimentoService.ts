@@ -1,5 +1,6 @@
 import { getCustomRepository } from "typeorm";
 import { ConhecimentoRepositories } from "../repositories/ConhecimentoRepositories";
+import { redisCleanCache } from "../utils/redisCleanCache";
 import { CreatePilarService } from "./CreatePilarService";
 
 interface IConhecimentoRequest {
@@ -43,6 +44,8 @@ class CreateConhecimentoService {
     });
 
     await conhecimentoRepositories.save(conhecimento);
+
+    redisCleanCache(`${colaborador_id}Documents`);
 
     return conhecimento.id;
   }

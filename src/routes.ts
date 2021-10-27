@@ -36,6 +36,7 @@ import { UpdateColaboradorConhecimentoController } from "./controllers/UpdateCol
 import { UpdateColaboradorDataController } from "./controllers/UpdateColaboradorDataController";
 import { RecoverPasswordController } from "./controllers/RecoverPasswordController";
 import { ResetPasswordController } from "./controllers/ResetPasswordController";
+import { SendStockUpdateController } from "./controllers/SendStockUpdateController";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -98,6 +99,8 @@ const updateColaboradorDataController = new UpdateColaboradorDataController();
 
 const recoverPasswordController = new RecoverPasswordController();
 const resetPasswordController = new ResetPasswordController();
+
+const sendStockUpdateController = new SendStockUpdateController();
 
 router.get(
   "/colaborador",
@@ -184,6 +187,7 @@ router.get(
 router.put(
   "/pilares/saude/pendente/:pillar_id",
   ensureAuthenticated,
+  ensureAdmin,
   updateColaboradorSaudeController.handle
 );
 router.get(
@@ -233,6 +237,7 @@ router.get(
 router.put(
   "/pilares/conhecimento/pendente/:pillar_id",
   ensureAuthenticated,
+  ensureAdmin,
   updateColaboradorConhecimentoController.handle
 );
 
@@ -252,5 +257,7 @@ router.get(
   ensureAuthenticated,
   showInternoColaboradorScoreService.handle
 );
+
+router.post("/stock_updates", sendStockUpdateController.handle);
 
 export { router };
