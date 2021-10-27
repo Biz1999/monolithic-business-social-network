@@ -7,7 +7,6 @@ function redisCleanCache(pattern: string) {
   });
 
   stream.on("data", function (keys) {
-    // `keys` is an array of strings representing key names
     if (keys.length) {
       var pipeline = redis.pipeline();
       keys.forEach(function (key) {
