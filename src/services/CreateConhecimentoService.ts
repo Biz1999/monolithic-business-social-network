@@ -1,4 +1,5 @@
-import { getCustomRepository } from "typeorm";
+import { getConnection, getCustomRepository } from "typeorm";
+import { Conhecimento } from "../models/Conhecimento";
 import { ConhecimentoRepositories } from "../repositories/ConhecimentoRepositories";
 import { redisCleanCache } from "../utils/redisCleanCache";
 import { CreatePilarService } from "./CreatePilarService";
@@ -21,6 +22,9 @@ class CreateConhecimentoService {
       ConhecimentoRepositories
     );
     const pilarService = new CreatePilarService();
+    const connection = getConnection();
+    const queryRunner = connection.createQueryRunner();
+    await queryRunner.connect();
 
     if (!categoria || !descricao) {
       throw new Error("Campos vazios");
@@ -43,11 +47,32 @@ class CreateConhecimentoService {
       descricao,
     });
 
-    await conhecimentoRepositories.save(conhecimento);
+    await queryRunner.startTransaction();
 
-    redisCleanCache(`${colaborador_id}Documents`);
+    try {
+      const result = await queryRunner.manager
+        .createQueryBuilder()
+        .insert()
+        .into(Conhecimento)
+        .values([conhecimento])
+        .updateEntity(true)
+        .returning(["id"])
+        .execute();
 
-    return conhecimento.id;
+      await queryRunner.commitTransaction();
+
+      redisCleanCache("conhecimentoPendentes");
+      redisCleanCache(`${colaborador_id}Documents`);
+
+      await queryRunner.release();
+
+      return result?.raw[0].id;
+    } catch (err) {
+      console.log(err);
+      await queryRunner.rollbackTransaction();
+      await queryRunner.release();
+      throw new Error("Não foi possível salvar");
+    }
   }
 }
 

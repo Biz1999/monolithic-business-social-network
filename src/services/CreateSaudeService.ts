@@ -1,4 +1,5 @@
-import { getCustomRepository } from "typeorm";
+import { getCustomRepository, getConnection } from "typeorm";
+import { Saude } from "../models/Saude";
 import { SaudeRepositories } from "../repositories/SaudeRepositories";
 import { redisCleanCache } from "../utils/redisCleanCache";
 import { CreatePilarService } from "./CreatePilarService";
@@ -18,12 +19,18 @@ class CreateSaudeService {
   }: ISaudeRequest) {
     const saudeRepositories = getCustomRepository(SaudeRepositories);
     const pilarService = new CreatePilarService();
+    const connection = getConnection();
+    const queryRunner = connection.createQueryRunner();
+    await queryRunner.connect();
 
     if (!categoria || !legenda || isAvailable === null) {
       throw new Error("Campos vazios");
     }
 
     const pilar_id = await pilarService.execute({ colaborador_id });
+
+    redisCleanCache("saudePendentes");
+    redisCleanCache(`${colaborador_id}Photos`);
 
     const saude = saudeRepositories.create({
       pilar_id,
@@ -32,11 +39,28 @@ class CreateSaudeService {
       isAvailable,
     });
 
-    await saudeRepositories.save(saude);
+    await queryRunner.startTransaction();
 
-    redisCleanCache(`${colaborador_id}Photos`);
+    try {
+      const result = await queryRunner.manager
+        .createQueryBuilder()
+        .insert()
+        .into(Saude)
+        .values([saude])
+        .updateEntity(true)
+        .returning(["id"])
+        .execute();
 
-    return saude.id;
+      await queryRunner.commitTransaction();
+      await queryRunner.release();
+
+      return result?.raw[0].id;
+    } catch (err) {
+      console.log(err);
+      await queryRunner.rollbackTransaction();
+      await queryRunner.release();
+      throw new Error("Não foi possível salvar");
+    }
   }
 }
 

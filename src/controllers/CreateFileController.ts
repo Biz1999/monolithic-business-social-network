@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import ip from "ip";
 
 import { CreateFileService } from "../services/CreateFileService";
-import { CreateSPDocumentService } from "../services/CreateSPDocumentService";
 import { ShowConhecimentoPillarDataService } from "../services/ShowConhecimentoPillarDataService";
 
 export interface Photo {
@@ -28,11 +27,10 @@ class CreateFileController {
     const createFileService = new CreateFileService();
     const showConhecimentoPillarDataService =
       new ShowConhecimentoPillarDataService();
-    const createSPDocumentService = new CreateSPDocumentService();
 
     const now = Date.now();
     const promises = files.map(async (file) => {
-      const uri = `http://192.168.11.79:8000/cdn/${colaborador_id}/${file.filename}`;
+      const uri = `http://177.190.201.227:3000/cdn/${colaborador_id}/${file.filename}`;
       return await createFileService.execute({ conhecimento_id, uri });
     });
 

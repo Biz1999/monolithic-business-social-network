@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import ip from "ip";
 import { CreateSingleImageService } from "../services/CreateSingleImageService";
-import { CreateSPSingleimageService } from "../services/CreateSPSingleImageService";
 
 export interface Photo {
   fieldname: string;
@@ -17,7 +16,6 @@ export interface Photo {
 class CreateSingleImageController {
   async handle(request: Request, response: Response) {
     const createSingleImageService = new CreateSingleImageService();
-    const createSPSingleImageService = new CreateSPSingleimageService();
 
     const file = request.file as Photo;
     const { colaborador_id } = request;
@@ -31,14 +29,6 @@ class CreateSingleImageController {
       const saveComprovante = await createSingleImageService.execute({
         interno_id,
         comprovante,
-      });
-
-      createSPSingleImageService.execute({
-        colaborador_id,
-        interno_id,
-        filename: file.filename,
-        path: file.path,
-        now: Date.now(),
       });
 
       return response.status(201).json(saveComprovante);
