@@ -6,10 +6,12 @@ import "./postgres";
 import ip from "ip";
 
 import { router } from "./routes";
+import { watchFile } from "fs";
 
 import { postgreDB } from "./database";
 import { ensureAuthenticated } from "./middlewares/ensureAuthenticated";
 import cors from "cors";
+import { ExcelTableController } from "./controllers/ExcelTableController";
 
 const app = express();
 
@@ -20,6 +22,15 @@ const bootstrap = async () => {
   const fs = require("fs");
   const path = require("path");
 
+  const excelTableController = new ExcelTableController();
+  // watchFile(
+  //   "../../../SPI Integracao de Sistemas Ltda/Superar-Para-Inovar-CDN - API-Armazenamento/ranking.csv",
+  //   (curr, prev) => {
+  //     console.log(`the current mtime is: ${curr.mtime}`);
+  //     console.log(`the previous mtime was: ${prev.mtime}`);
+  //     excelTableController.handle();
+  //   }
+  // );
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
