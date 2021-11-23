@@ -20,7 +20,7 @@ class ShowSaudeColaboradorScoreService {
       .andWhere(
         `'[${start_date}, ${end_date}]'::daterange @> pilar.created_at::date`
       )
-      .cache(`${id}Saude:${month}`, 3600000)
+      // .cache(`${id}Saude:${month}`, 3600000)
       .select("SUM(pilar.pontuacao)", "pontuacao_do_mes")
       .getRawOne();
 

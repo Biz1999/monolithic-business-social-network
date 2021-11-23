@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import ip from "ip";
 
 import { CreateImageService } from "../services/CreateImageService";
-import { CreateSPimageService } from "../services/CreateSPimageService";
 import { ShowSaudePillarDataService } from "../services/ShowSaudePillarDataService";
 
 export interface Photo {
@@ -26,12 +25,11 @@ class CreateImageController {
     }
 
     const createImageService = new CreateImageService();
-    const createSPimageService = new CreateSPimageService();
     const showSaudePillarDataService = new ShowSaudePillarDataService();
 
     const now = Date.now();
     const promises = files.map(async (file) => {
-      const uri = `http://192.168.11.79:8000/cdn/${colaborador_id}/${file.filename}`;
+      const uri = `http://177.190.201.227:3000/cdn/${colaborador_id}/${file.filename}`;
       return await createImageService.execute({ post_id, uri });
     });
 

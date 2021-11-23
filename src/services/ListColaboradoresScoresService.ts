@@ -25,7 +25,7 @@ class ListColaboradoresScoresService {
       .where(
         `'[${start_date}, ${end_date}]'::daterange @> pilares.created_at::date`
       )
-      .cache(`rankingScore:${start}_${limit}`, 3600000)
+      // .cache(`rankingScore:${start}_${limit}`, 3600000)
       .offset(start)
       .limit(limit)
       .getRawMany();

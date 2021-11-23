@@ -14,13 +14,13 @@ class ListAllColaboradoresPostsService {
 
     const photos = saudeRepositories
       .createQueryBuilder("post")
+      // .cache(`${colaborador_id}Photos:${start}_${limit}`, 3600000)
       .leftJoinAndSelect("post.pilarId", "pilar")
       .where("pilar.colaborador_id = :id", { id: colaborador_id })
       .orderBy("pilar.created_at", "DESC")
       .leftJoinAndSelect("post.photos", "photos")
       .skip(start)
       .take(limit)
-      .cache(`${colaborador_id}Photos:${start}_${limit}`, 3600000)
       .getMany();
 
     return classToPlain(photos);

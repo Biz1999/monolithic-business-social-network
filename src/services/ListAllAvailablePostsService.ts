@@ -22,7 +22,7 @@ class ListAllAvailablePostsService {
       .orderBy("pilar.created_at", "DESC")
       .skip(start)
       .take(limit)
-      .cache(`availablePosts:${start}_${limit}`, 3600000)
+      // .cache(`availablePosts:${start}_${limit}`, 3600000)
       .getMany();
 
     return classToPlain(feed);

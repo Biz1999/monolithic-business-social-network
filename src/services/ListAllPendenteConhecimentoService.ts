@@ -22,7 +22,7 @@ class ListAllPendenteConhecimentoService {
       .leftJoinAndSelect("conhecimento.files", "files")
       .skip(start)
       .take(limit)
-      .cache(`conhecimentoPendentes:${start}_${limit}`, 3600000)
+      // .cache(`conhecimentoPendentes:${start}_${limit}`, 3600000)
       .getMany();
 
     return classToPlain(pendentes);

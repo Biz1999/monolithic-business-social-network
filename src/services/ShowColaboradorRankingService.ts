@@ -21,7 +21,7 @@ class ShowColaboradorRankingService {
       )
       .select(["SUM(pilar.pontuacao)", "pilar.colaborador_id"])
       .orderBy("sum", "DESC")
-      .cache(`${id}Ranking:all_${month}`, 3600000)
+      // .cache(`${id}Ranking:all_${month}`, 3600000)
       .getRawMany();
 
     const rankingPosition = ranking.findIndex(

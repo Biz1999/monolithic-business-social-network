@@ -40,12 +40,13 @@ const bootstrap = async () => {
     "/cdn",
     //ensureAuthenticated,
     express.static(
-      "../../../SPI Integracao de Sistemas Ltda/Superar-Para-Inovar-CDN - API-Armazenamento"
+      "../../../../SPI Integracao de Sistemas Ltda/Superar-Para-Inovar-CDN - API-Armazenamento"
     )
   );
   app.use("/", express.static("public"));
   app.use("/home", express.static("public"));
   app.use("/recover", express.static("recover"));
+  app.use("/api/v2/docs", express.static("api"));
 
   app.get("*", function (req, res) {
     res
@@ -77,8 +78,8 @@ const bootstrap = async () => {
   //   app
   // );
 
-  app.listen(8000, () => {
-    console.log(`Ip ${ip.address()}-> Server listenin...`);
+  app.listen(3000, () => {
+    console.log(`Porta externa -> Server listenin...`);
   });
   // sslServer.listen(443, () => {
   //   console.log(`Ip ${ip.address()}-> Server listenin...`);

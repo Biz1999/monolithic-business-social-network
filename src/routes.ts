@@ -36,11 +36,10 @@ import { UpdateColaboradorConhecimentoController } from "./controllers/UpdateCol
 import { UpdateColaboradorDataController } from "./controllers/UpdateColaboradorDataController";
 import { RecoverPasswordController } from "./controllers/RecoverPasswordController";
 import { ResetPasswordController } from "./controllers/ResetPasswordController";
-import { SendStockUpdateController } from "./controllers/SendStockUpdateController";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dir = `../../../SPI Integracao de Sistemas Ltda/Superar-Para-Inovar-CDN - API-Armazenamento/${req.colaborador_id}`;
+    const dir = `../../../../SPI Integracao de Sistemas Ltda/Superar-Para-Inovar-CDN - API-Armazenamento/${req.colaborador_id}`;
 
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir);
@@ -100,8 +99,9 @@ const updateColaboradorDataController = new UpdateColaboradorDataController();
 const recoverPasswordController = new RecoverPasswordController();
 const resetPasswordController = new ResetPasswordController();
 
-const sendStockUpdateController = new SendStockUpdateController();
-
+router.get("/ping", (req, res) => {
+  res.send("pong");
+});
 router.get(
   "/colaborador",
   ensureAuthenticated,
@@ -257,7 +257,5 @@ router.get(
   ensureAuthenticated,
   showInternoColaboradorScoreService.handle
 );
-
-router.post("/stock_updates", sendStockUpdateController.handle);
 
 export { router };
