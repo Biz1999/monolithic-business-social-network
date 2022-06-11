@@ -1,3 +1,2 @@
-# Superar Para Inovar - Backend
+# Monolithic Business Social Network
 
-Backend para Superar Para Inovar App
